@@ -15,8 +15,11 @@ class _MyAppState extends State<MyApp> {
   @override
   Widget build(BuildContext context) {
     return const MaterialApp(
-      home: Center(
-        child: Text('Test'),
+      debugShowCheckedModeBanner: false,
+      home: Scaffold(
+        body: Center(
+          child: Text('Test'),
+        ),
       ),
     );
   }
