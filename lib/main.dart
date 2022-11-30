@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'views/pages/pages.dart';
 
 void main() {
   runApp(const MyApp());
@@ -16,11 +17,7 @@ class _MyAppState extends State<MyApp> {
   Widget build(BuildContext context) {
     return const MaterialApp(
       debugShowCheckedModeBanner: false,
-      home: Scaffold(
-        body: Center(
-          child: Text('Test'),
-        ),
-      ),
+      home: SplashScreen(),
     );
   }
 }
