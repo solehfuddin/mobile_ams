@@ -1,13 +1,17 @@
 part of 'widgets.dart';
 
-class MyBottomNavigation extends StatefulWidget {
-  const MyBottomNavigation({Key? key}) : super(key: key);
+// ignore: must_be_immutable
+class CustomNavigation extends StatefulWidget {
+  final void Function(int) onData;
+  const CustomNavigation(this.onData, {Key? key}) : super(key: key);
 
   @override
-  State<MyBottomNavigation> createState() => _MyBottomNavigationState();
+  State<CustomNavigation> createState() => _CustomNavigationState();
 }
 
-class _MyBottomNavigationState extends State<MyBottomNavigation> {
+class _CustomNavigationState extends State<CustomNavigation> {
+  int pos = 0;
+
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -30,12 +34,20 @@ class _MyBottomNavigationState extends State<MyBottomNavigation> {
           Expanded(
             flex: 1,
             child: GestureDetector(
-              onTap: () {},
+              onTap: () {
+                setState(() {
+                  pos = 0;
+                });
+
+                widget.onData(0);
+              },
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   Image.asset(
-                    'assets/images/ic_dashboard_active.png',
+                    pos == 0
+                        ? 'assets/images/ic_dashboard_active.png'
+                        : 'assets/images/ic_dashboard_inactive.png',
                     width: 24,
                     height: 24,
                   ),
@@ -45,7 +57,11 @@ class _MyBottomNavigationState extends State<MyBottomNavigation> {
                       fontWeight: FontWeight.normal,
                       fontFamily: "Inter",
                       fontSize: 14,
-                      color: mainColor,
+                      color: pos == 0
+                          ? mainColor
+                          : mainColor.withOpacity(
+                              0.5,
+                            ),
                     ),
                   ),
                 ],
@@ -55,12 +71,20 @@ class _MyBottomNavigationState extends State<MyBottomNavigation> {
           Expanded(
             flex: 1,
             child: GestureDetector(
-              onTap: () {},
+              onTap: () {
+                setState(() {
+                  pos = 1;
+                });
+
+                widget.onData(1);
+              },
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   Image.asset(
-                    'assets/images/ic_dashboard_active.png',
+                    pos == 1
+                        ? 'assets/images/ic_technisian_active.png'
+                        : 'assets/images/ic_technisian_inactive.png',
                     width: 24,
                     height: 24,
                   ),
@@ -70,7 +94,11 @@ class _MyBottomNavigationState extends State<MyBottomNavigation> {
                       fontWeight: FontWeight.normal,
                       fontFamily: "Inter",
                       fontSize: 14,
-                      color: mainColor,
+                      color: pos == 1
+                          ? mainColor
+                          : mainColor.withOpacity(
+                              0.5,
+                            ),
                     ),
                   ),
                 ],
@@ -80,12 +108,20 @@ class _MyBottomNavigationState extends State<MyBottomNavigation> {
           Expanded(
             flex: 1,
             child: GestureDetector(
-              onTap: () {},
+              onTap: () {
+                setState(() {
+                  pos = 2;
+                });
+
+                widget.onData(2);
+              },
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   Image.asset(
-                    'assets/images/ic_dashboard_active.png',
+                    pos == 2
+                        ? 'assets/images/ic_history_active.png'
+                        : 'assets/images/ic_history_inactive.png',
                     width: 24,
                     height: 24,
                   ),
@@ -95,7 +131,11 @@ class _MyBottomNavigationState extends State<MyBottomNavigation> {
                       fontWeight: FontWeight.normal,
                       fontFamily: "Inter",
                       fontSize: 14,
-                      color: mainColor,
+                      color: pos == 2
+                          ? mainColor
+                          : mainColor.withOpacity(
+                              0.5,
+                            ),
                     ),
                   ),
                 ],
@@ -105,12 +145,20 @@ class _MyBottomNavigationState extends State<MyBottomNavigation> {
           Expanded(
             flex: 1,
             child: GestureDetector(
-              onTap: () {},
+              onTap: () {
+                setState(() {
+                  pos = 3;
+                });
+
+                widget.onData(3);
+              },
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   Image.asset(
-                    'assets/images/ic_dashboard_active.png',
+                    pos == 3
+                        ? 'assets/images/ic_account_active.png'
+                        : 'assets/images/ic_account_inactive.png',
                     width: 24,
                     height: 24,
                   ),
@@ -120,7 +168,11 @@ class _MyBottomNavigationState extends State<MyBottomNavigation> {
                       fontWeight: FontWeight.normal,
                       fontFamily: "Inter",
                       fontSize: 14,
-                      color: mainColor,
+                      color: pos == 3
+                          ? mainColor
+                          : mainColor.withOpacity(
+                              0.5,
+                            ),
                     ),
                   ),
                 ],

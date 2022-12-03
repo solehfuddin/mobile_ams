@@ -15,6 +15,10 @@ class NavigationGenerator {
         return MaterialPageRoute(
           builder: (_) => const SplashScreen(),
         );
+      case '/technisian':
+        return MaterialPageRoute(
+          builder: (_) => const TechnisianScreen(),
+        );
       default:
         return _errorRoute();
     }
