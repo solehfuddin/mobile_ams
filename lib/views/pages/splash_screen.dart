@@ -68,7 +68,12 @@ class SplashScreen extends StatelessWidget {
                           width: 5,
                         ),
                         GestureDetector(
-                          onTap: () {},
+                          onTap: () {
+                            Navigator.pushReplacementNamed(
+                              context,
+                              '/login',
+                            );
+                          },
                           child: Text(
                             "Login",
                             style: TextStyle(
@@ -84,15 +89,34 @@ class SplashScreen extends StatelessWidget {
                       height: 15,
                     ),
                     Row(
-                      children: const [
+                      children: [
                         Expanded(
                           child: Padding(
-                            padding: EdgeInsets.only(
+                            padding: const EdgeInsets.only(
                               left: 20,
                               right: 20,
                               bottom: 30,
                             ),
-                            child: PrimaryButton(),
+                            child: ElevatedButton(
+                              onPressed: () {
+                                Navigator.pushReplacementNamed(
+                                  context,
+                                  '/login',
+                                );
+                              },
+                              style: ElevatedButton.styleFrom(
+                                primary: mainColor,
+                                minimumSize: const Size(320, 48),
+                                shape: RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.circular(
+                                    8,
+                                  ),
+                                ),
+                              ),
+                              child: const Text(
+                                'Start Now',
+                              ),
+                            ),
                           ),
                         ),
                       ],
