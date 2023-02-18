@@ -83,13 +83,13 @@ class _CustomNavigationState extends State<CustomNavigation> {
                 children: [
                   Image.asset(
                     pos == 1
-                        ? 'assets/images/ic_technisian_active.png'
-                        : 'assets/images/ic_technisian_inactive.png',
+                        ? 'assets/images/ic_visit_active.png'
+                        : 'assets/images/ic_visit_inactive.png',
                     width: 24,
                     height: 24,
                   ),
                   Text(
-                    'Technisian',
+                    'Visit List',
                     style: TextStyle(
                       fontWeight: FontWeight.normal,
                       fontFamily: "Inter",
@@ -104,6 +104,9 @@ class _CustomNavigationState extends State<CustomNavigation> {
                 ],
               ),
             ),
+          ),
+          const SizedBox(
+            width: 32,
           ),
           Expanded(
             flex: 1,
@@ -120,13 +123,13 @@ class _CustomNavigationState extends State<CustomNavigation> {
                 children: [
                   Image.asset(
                     pos == 2
-                        ? 'assets/images/ic_history_active.png'
-                        : 'assets/images/ic_history_inactive.png',
+                        ? 'assets/images/ic_ups_active.png'
+                        : 'assets/images/ic_ups_inactive.png',
                     width: 24,
                     height: 24,
                   ),
                   Text(
-                    'History',
+                    'Selector',
                     style: TextStyle(
                       fontWeight: FontWeight.normal,
                       fontFamily: "Inter",
@@ -163,7 +166,7 @@ class _CustomNavigationState extends State<CustomNavigation> {
                     height: 24,
                   ),
                   Text(
-                    'Account',
+                    'Profile',
                     style: TextStyle(
                       fontWeight: FontWeight.normal,
                       fontFamily: "Inter",

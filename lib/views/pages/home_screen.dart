@@ -1,7 +1,13 @@
 part of 'pages.dart';
 
+// ignore: must_be_immutable
 class HomeScreen extends StatefulWidget {
-  const HomeScreen({Key? key}) : super(key: key);
+  late LocationModels myLocation;
+  UserModel? user;
+
+  HomeScreen(this.myLocation, {this.user, Key? key}) : super(key: key);
+
+  // const HomeScreen({Key? key}) : super(key: key);
 
   @override
   State<HomeScreen> createState() => _HomeScreenState();
@@ -63,8 +69,8 @@ class _HomeScreenState extends State<HomeScreen> {
             height: 47,
           ),
           Row(
-            children: const [
-              Text(
+            children: [
+              const Text(
                 'Good morning,',
                 style: TextStyle(
                   fontWeight: FontWeight.normal,
@@ -72,12 +78,13 @@ class _HomeScreenState extends State<HomeScreen> {
                   fontSize: 14,
                 ),
               ),
-              SizedBox(
+              const SizedBox(
                 width: 3,
               ),
               Text(
-                'Muhamad Solehfuddin',
-                style: TextStyle(
+                '${widget.user?.fullname}',
+                // '${widget.myLocation.longitude} * ${widget.myLocation.latitude}',
+                style: const TextStyle(
                   color: Colors.black,
                   fontWeight: FontWeight.bold,
                   fontFamily: "Inter",
@@ -205,12 +212,12 @@ class _HomeScreenState extends State<HomeScreen> {
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
                         Image.asset(
-                          'assets/images/dashboard_waiting.png',
+                          'assets/images/dashboard_job.png',
                           width: 100,
                           height: 100,
                         ),
                         const Text(
-                          'Waiting',
+                          'Job',
                           style: TextStyle(
                             fontWeight: FontWeight.w700,
                             fontFamily: "Inter",
@@ -227,40 +234,41 @@ class _HomeScreenState extends State<HomeScreen> {
               ),
               Expanded(
                 flex: 1,
-                child: GestureDetector(
-                  onTap: () {},
-                  child: Container(
-                    decoration: const BoxDecoration(
-                      color: Colors.white,
-                      borderRadius: BorderRadius.all(
-                        Radius.circular(
-                          20,
-                        ),
-                      ),
-                    ),
-                    width: 148,
-                    height: 148,
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.center,
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        Image.asset(
-                          'assets/images/dashboard_complain.png',
-                          width: 100,
-                          height: 100,
-                        ),
-                        const Text(
-                          'Complain',
-                          style: TextStyle(
-                            fontWeight: FontWeight.w700,
-                            fontFamily: "Inter",
-                            fontSize: 15,
-                          ),
-                        )
-                      ],
-                    ),
-                  ),
-                ),
+                child: Container(),
+                // child: GestureDetector(
+                //   onTap: () {},
+                //   child: Container(
+                //     decoration: const BoxDecoration(
+                //       color: Colors.white,
+                //       borderRadius: BorderRadius.all(
+                //         Radius.circular(
+                //           20,
+                //         ),
+                //       ),
+                //     ),
+                //     width: 148,
+                //     height: 148,
+                //     child: Column(
+                //       crossAxisAlignment: CrossAxisAlignment.center,
+                //       mainAxisAlignment: MainAxisAlignment.center,
+                //       children: [
+                //         Image.asset(
+                //           'assets/images/dashboard_complain.png',
+                //           width: 100,
+                //           height: 100,
+                //         ),
+                //         const Text(
+                //           'Complain',
+                //           style: TextStyle(
+                //             fontWeight: FontWeight.w700,
+                //             fontFamily: "Inter",
+                //             fontSize: 15,
+                //           ),
+                //         )
+                //       ],
+                //     ),
+                //   ),
+                // ),
               ),
             ],
           ),

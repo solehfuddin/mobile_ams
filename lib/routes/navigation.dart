@@ -2,10 +2,13 @@ part of 'routes.dart';
 
 class NavigationGenerator {
   static Route<dynamic> generateRoute(RouteSettings settings) {
+    final session = SessionServices();
     switch (settings.name) {
       case '/home':
         return MaterialPageRoute(
-          builder: (_) => const DashboardScreen(),
+          builder: (_) => DashboardScreen(
+            user: session.readUserSession(),
+          ),
         );
       case '/login':
         return MaterialPageRoute(
@@ -13,11 +16,33 @@ class NavigationGenerator {
         );
       case '/splash':
         return MaterialPageRoute(
-          builder: (_) => const SplashScreen(),
+          builder: (_) => SplashScreen(),
         );
-      case '/technisian':
+      case '/visiting':
         return MaterialPageRoute(
-          builder: (_) => const TechnisianScreen(),
+          builder: (_) => const VisitingScreen(),
+        );
+      case '/profile':
+        return MaterialPageRoute(
+          builder: (_) => ProfileScreen(
+            user: session.readUserSession(),
+          ),
+        );
+      case '/change-profile':
+        return MaterialPageRoute(
+          builder: (_) => ChangeProfileScreen(
+            user: session.readUserSession(),
+          ),
+        );
+      case '/change-password':
+        return MaterialPageRoute(
+          builder: (_) => const ChangePasswordScreen(),
+        );
+      case '/change-email':
+        return MaterialPageRoute(
+          builder: (_) => ChangeEmailScreen(
+            user: session.readUserSession(),
+          ),
         );
       default:
         return _errorRoute();

@@ -1,7 +1,8 @@
 part of 'pages.dart';
 
 class SplashScreen extends StatelessWidget {
-  const SplashScreen({Key? key}) : super(key: key);
+  SplashScreen({Key? key}) : super(key: key);
+  final session = SessionServices();
 
   @override
   Widget build(BuildContext context) {
@@ -69,6 +70,7 @@ class SplashScreen extends StatelessWidget {
                         ),
                         GestureDetector(
                           onTap: () {
+                            session.writeSplashSession();
                             Navigator.pushReplacementNamed(
                               context,
                               '/login',
@@ -99,13 +101,14 @@ class SplashScreen extends StatelessWidget {
                             ),
                             child: ElevatedButton(
                               onPressed: () {
+                                session.writeSplashSession();
                                 Navigator.pushReplacementNamed(
                                   context,
                                   '/login',
                                 );
                               },
                               style: ElevatedButton.styleFrom(
-                                primary: mainColor,
+                                backgroundColor: mainColor,
                                 minimumSize: const Size(320, 48),
                                 shape: RoundedRectangleBorder(
                                   borderRadius: BorderRadius.circular(
