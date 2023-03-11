@@ -22,6 +22,22 @@ class NavigationGenerator {
         return MaterialPageRoute(
           builder: (_) => const VisitingScreen(),
         );
+      case '/completed':
+        return MaterialPageRoute(
+          builder: (_) => const CompletedScreen(),
+        );
+      case '/process':
+        return MaterialPageRoute(
+          builder: (_) => const ProcessScreen(),
+        );
+      case '/reschedule':
+        return MaterialPageRoute(
+          builder: (_) => const RescheduleScreen(),
+        );
+      case '/notification':
+        return MaterialPageRoute(
+          builder: (_) => const NotificationScreen(),
+        );
       case '/profile':
         return MaterialPageRoute(
           builder: (_) => ProfileScreen(

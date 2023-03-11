@@ -1,11 +1,8 @@
-part of 'pages.dart';
+part of '../pages.dart';
 
 const locationBackground = "location";
 var notif = NotificationServices();
 void callbackDispatcher() {
-  // final profileController = Get.put(ProfileController());
-  // final session = SessionServices();
-
   Workmanager().executeTask((taskName, inputData) async {
     switch (taskName) {
       case locationBackground:
@@ -147,7 +144,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
                   onTap: () {
                     Navigator.pushNamed(
                       context,
-                      '/visiting',
+                      '/notification',
                     );
                   },
                   child: Container(
@@ -162,8 +159,10 @@ class _DashboardScreenState extends State<DashboardScreen> {
                           color: Colors.grey.withOpacity(0.5),
                           spreadRadius: 1.5,
                           blurRadius: 3,
-                          offset:
-                              const Offset(0, 2), // changes position of shadow
+                          offset: const Offset(
+                            0,
+                            2,
+                          ),
                         ),
                       ],
                     ),

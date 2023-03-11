@@ -40,9 +40,10 @@ class LoginController extends GetxController {
       if (value.status) {
         session.writeUserSession(value.user, password);
 
-        Navigator.pushNamed(
+        Navigator.pushNamedAndRemoveUntil(
           context,
           '/home',
+          (route) => false,
         );
       } else {
         showDialog(

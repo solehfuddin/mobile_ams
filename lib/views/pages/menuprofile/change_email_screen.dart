@@ -1,62 +1,40 @@
-part of 'pages.dart';
+part of '../pages.dart';
 
 // ignore: must_be_immutable
-class ChangeProfileScreen extends StatefulWidget {
+class ChangeEmailScreen extends StatefulWidget {
   UserModel? user;
-  ChangeProfileScreen({this.user, super.key});
+  ChangeEmailScreen({this.user, super.key});
 
   @override
-  State<ChangeProfileScreen> createState() => _ChangeProfileScreenState();
+  State<ChangeEmailScreen> createState() => _ChangeEmailScreenState();
 }
 
-class _ChangeProfileScreenState extends State<ChangeProfileScreen> {
+class _ChangeEmailScreenState extends State<ChangeEmailScreen> {
   final _profileController = Get.put(ProfileController());
-  final session = SessionServices();
-  final _usernameText = TextEditingController();
-  final _phoneText = TextEditingController();
-  final _addressText = TextEditingController();
-  List<Placemark>? _getAddress;
-  String phoneNumber = "";
+  bool showPassword = true;
+  final _currentEmailText = TextEditingController();
+  final _newEmailText = TextEditingController();
+  final _passwordText = TextEditingController();
 
   @override
   void initState() {
     super.initState();
-    widget.user = session.readUserSession();
-    _usernameText.text = widget.user?.username ?? "Not set";
-    getLocationAddress();
-  }
-
-  void getLocationAddress() async {
-    LocationModels loc = session.readLocationSession();
-
-    _getAddress = await placemarkFromCoordinates(
-      loc.latitude ?? 0,
-      loc.longitude ?? 0,
-    );
-
-    setState(() {});
+    showPassword = true;
+    _currentEmailText.text = widget.user?.email ?? "Not set";
   }
 
   @override
   Widget build(BuildContext context) {
     return Obx(
       () => Scaffold(
-        resizeToAvoidBottomInset: false,
         body: Container(
           width: double.maxFinite,
           height: double.infinity,
           padding: const EdgeInsets.only(
             top: 35,
           ),
-          decoration: BoxDecoration(
-            gradient: LinearGradient(
-              begin: Alignment.topLeft,
-              end: Alignment.bottomRight,
-              colors: [
-                splashColor1.withOpacity(0),
-                splashColor1.withOpacity(0.11),
-              ],
-            ),
+          decoration: const BoxDecoration(
+            color: Colors.white,
           ),
           child: Padding(
             padding: const EdgeInsets.only(
@@ -79,7 +57,7 @@ class _ChangeProfileScreenState extends State<ChangeProfileScreen> {
                           onTap: () => Navigator.pop(context),
                         ),
                         const Text(
-                          'Edit Profile',
+                          'Change Email',
                           style: TextStyle(
                             color: Colors.black,
                             fontWeight: FontWeight.bold,
@@ -96,7 +74,7 @@ class _ChangeProfileScreenState extends State<ChangeProfileScreen> {
                       height: 15,
                     ),
                     const Text(
-                      'Username',
+                      'Current Email',
                       style: TextStyle(
                         color: Colors.black,
                         fontWeight: FontWeight.w400,
@@ -122,61 +100,19 @@ class _ChangeProfileScreenState extends State<ChangeProfileScreen> {
                           horizontal: 8,
                         ),
                       ),
-                      keyboardType: TextInputType.name,
+                      keyboardType: TextInputType.emailAddress,
                       style: const TextStyle(
                         fontSize: 16,
                         color: Colors.grey,
                       ),
                       enabled: false,
-                      controller: _usernameText,
+                      controller: _currentEmailText,
                     ),
                     const SizedBox(
                       height: 15,
                     ),
                     const Text(
-                      'Phone',
-                      style: TextStyle(
-                        color: Colors.black,
-                        fontWeight: FontWeight.w400,
-                        fontFamily: "Inter",
-                        fontSize: 13,
-                      ),
-                    ),
-                    const SizedBox(
-                      height: 10,
-                    ),
-                    IntlPhoneField(
-                      decoration: InputDecoration(
-                        labelText: 'Phone Number',
-                        border: const OutlineInputBorder(
-                          borderRadius: BorderRadius.all(
-                            Radius.circular(8),
-                          ),
-                        ),
-                        labelStyle: const TextStyle(
-                          color: Colors.black,
-                        ),
-                        contentPadding: const EdgeInsets.symmetric(
-                          vertical: 3,
-                          horizontal: 8,
-                        ),
-                        errorText: _profileController.isCorrectPhone.isTrue
-                            ? null
-                            : "Please complete phone",
-                      ),
-                      initialCountryCode: 'ID',
-                      onChanged: (phone) {
-                        phoneNumber = phone.completeNumber;
-                        _profileController.checkPhone(phoneNumber);
-                      },
-                      disableLengthCheck: true,
-                      controller: _phoneText,
-                    ),
-                    const SizedBox(
-                      height: 15,
-                    ),
-                    const Text(
-                      'Address',
+                      'New Email',
                       style: TextStyle(
                         color: Colors.black,
                         fontWeight: FontWeight.w400,
@@ -188,32 +124,34 @@ class _ChangeProfileScreenState extends State<ChangeProfileScreen> {
                       height: 10,
                     ),
                     TextField(
-                      decoration: const InputDecoration(
-                        border: OutlineInputBorder(
+                      decoration: InputDecoration(
+                        border: const OutlineInputBorder(
                           borderRadius: BorderRadius.all(
                             Radius.circular(8),
                           ),
                         ),
-                        labelStyle: TextStyle(
+                        labelStyle: const TextStyle(
                           color: Colors.black,
                         ),
-                        contentPadding: EdgeInsets.symmetric(
-                          vertical: 8,
+                        contentPadding: const EdgeInsets.symmetric(
+                          vertical: 5,
                           horizontal: 8,
                         ),
+                        errorText: _profileController.isCorrectEmail.isTrue
+                            ? null
+                            : "Incorrect email address",
                       ),
-                      keyboardType: TextInputType.multiline,
-                      maxLines: 6,
+                      keyboardType: TextInputType.emailAddress,
                       style: const TextStyle(
                         fontSize: 16,
                       ),
-                      controller: _addressText,
+                      controller: _newEmailText,
                     ),
                     const SizedBox(
                       height: 15,
                     ),
                     const Text(
-                      'PinPoint',
+                      'Password',
                       style: TextStyle(
                         color: Colors.black,
                         fontWeight: FontWeight.w400,
@@ -224,49 +162,32 @@ class _ChangeProfileScreenState extends State<ChangeProfileScreen> {
                     const SizedBox(
                       height: 10,
                     ),
-                    Container(
-                      height: 60,
-                      padding: const EdgeInsets.symmetric(
-                        horizontal: 20,
-                      ),
-                      decoration: BoxDecoration(
-                        color: grayLightColor,
-                        borderRadius: BorderRadius.circular(
-                          10,
+                    TextField(
+                      obscureText: showPassword,
+                      decoration: InputDecoration(
+                        border: const OutlineInputBorder(
+                          borderRadius: BorderRadius.all(
+                            Radius.circular(8),
+                          ),
                         ),
+                        labelStyle: const TextStyle(
+                          color: Colors.black,
+                        ),
+                        suffixIcon: IconButton(
+                          onPressed: () {
+                            setState(() {
+                              showPassword = !showPassword;
+                            });
+                          },
+                          icon: Icon(showPassword
+                              ? Icons.visibility
+                              : Icons.visibility_off),
+                        ),
+                        errorText: _profileController.isCurrentPassword.isTrue
+                            ? null
+                            : "Please provide password",
                       ),
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          Row(
-                            children: [
-                              Image.asset(
-                                'assets/images/ic_location.png',
-                                width: 18,
-                                height: 18,
-                              ),
-                              const SizedBox(
-                                width: 10,
-                              ),
-                              Text(
-                                "${_getAddress?[0].street} ${_getAddress?[0].subLocality}, ${_getAddress?[0].subAdministrativeArea}",
-                                style: const TextStyle(
-                                  color: Colors.black,
-                                  fontWeight: FontWeight.w400,
-                                  fontFamily: "Inter",
-                                  fontSize: 13,
-                                ),
-                                softWrap: false,
-                                maxLines: 2,
-                              ),
-                            ],
-                          ),
-                          const Icon(
-                            Icons.arrow_forward_ios,
-                            size: 14,
-                          ),
-                        ],
-                      ),
+                      controller: _passwordText,
                     ),
                   ],
                 ),
@@ -281,10 +202,10 @@ class _ChangeProfileScreenState extends State<ChangeProfileScreen> {
                       ),
                       child: ElevatedButton(
                         onPressed: () {
-                          _profileController.changeProfile(
+                          _profileController.changeEmail(
                             context,
-                            phoneNumber,
-                            _addressText.text,
+                            _passwordText.text,
+                            _newEmailText.text,
                           );
                         },
                         style: ElevatedButton.styleFrom(

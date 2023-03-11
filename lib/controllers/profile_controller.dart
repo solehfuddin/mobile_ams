@@ -345,7 +345,7 @@ class ProfileController extends GetxController {
             ),
           );
     } catch (e) {
-      print(e);
+      // print(e);
     }
   }
 }

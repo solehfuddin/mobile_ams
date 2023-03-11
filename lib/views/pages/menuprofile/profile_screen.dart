@@ -1,4 +1,4 @@
-part of 'pages.dart';
+part of '../pages.dart';
 
 // ignore: must_be_immutable
 class ProfileScreen extends StatefulWidget {
@@ -72,11 +72,12 @@ class _ProfileScreenState extends State<ProfileScreen> {
                         child: _profileController.photoUser.value == ""
                             ? CircleAvatar(
                                 radius: 50,
-                                child: ClipOval(
+                                backgroundColor: grayLightColor,
+                                child: ClipRect(
                                     child: Image.asset(
                                   'assets/images/ic_camera.png',
-                                  width: 100,
-                                  height: 100,
+                                  width: 40,
+                                  height: 40,
                                 )),
                               )
                             : CircleAvatar(

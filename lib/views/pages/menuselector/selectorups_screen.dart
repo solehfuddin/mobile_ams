@@ -1,13 +1,13 @@
-part of 'pages.dart';
+part of '../pages.dart';
 
-class VisitingScreen extends StatefulWidget {
-  const VisitingScreen({Key? key}) : super(key: key);
+class SelectorupsScreen extends StatefulWidget {
+  const SelectorupsScreen({Key? key}) : super(key: key);
 
   @override
-  State<VisitingScreen> createState() => _VisitingScreenState();
+  State<SelectorupsScreen> createState() => _SelectorupsScreenState();
 }
 
-class _VisitingScreenState extends State<VisitingScreen> {
+class _SelectorupsScreenState extends State<SelectorupsScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(

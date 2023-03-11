@@ -1,4 +1,4 @@
-part of 'pages.dart';
+part of '../pages.dart';
 
 // ignore: must_be_immutable
 class HomeScreen extends StatefulWidget {
@@ -39,7 +39,7 @@ class _HomeScreenState extends State<HomeScreen> {
         children: [
           Container(
             margin: const EdgeInsets.only(
-              top: 10,
+              top: 15,
             ),
             child: Column(
               children: [
@@ -83,7 +83,6 @@ class _HomeScreenState extends State<HomeScreen> {
               ),
               Text(
                 '${widget.user?.fullname}',
-                // '${widget.myLocation.longitude} * ${widget.myLocation.latitude}',
                 style: const TextStyle(
                   color: Colors.black,
                   fontWeight: FontWeight.bold,
@@ -110,7 +109,12 @@ class _HomeScreenState extends State<HomeScreen> {
               Expanded(
                 flex: 1,
                 child: GestureDetector(
-                  onTap: () {},
+                  onTap: () {
+                    Navigator.pushNamed(
+                      context,
+                      '/completed',
+                    );
+                  },
                   child: Container(
                     decoration: const BoxDecoration(
                       color: Colors.white,
@@ -150,7 +154,12 @@ class _HomeScreenState extends State<HomeScreen> {
               Expanded(
                 flex: 1,
                 child: GestureDetector(
-                  onTap: () {},
+                  onTap: () {
+                    Navigator.pushNamed(
+                      context,
+                      '/process',
+                    );
+                  },
                   child: Container(
                     decoration: const BoxDecoration(
                       color: Colors.white,
@@ -195,7 +204,12 @@ class _HomeScreenState extends State<HomeScreen> {
               Expanded(
                 flex: 1,
                 child: GestureDetector(
-                  onTap: () {},
+                  onTap: () {
+                    Navigator.pushNamed(
+                      context,
+                      '/reschedule',
+                    );
+                  },
                   child: Container(
                     decoration: const BoxDecoration(
                       color: Colors.white,
@@ -212,12 +226,12 @@ class _HomeScreenState extends State<HomeScreen> {
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
                         Image.asset(
-                          'assets/images/dashboard_job.png',
+                          'assets/images/dashboard_reschedule.png',
                           width: 100,
                           height: 100,
                         ),
                         const Text(
-                          'Job',
+                          'Reschedule',
                           style: TextStyle(
                             fontWeight: FontWeight.w700,
                             fontFamily: "Inter",

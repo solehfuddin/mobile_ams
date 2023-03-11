@@ -1,4 +1,4 @@
-package com.example.mobile_ams
+package com.asiamegatama.apk_ams
 
 import io.flutter.embedding.android.FlutterActivity
 

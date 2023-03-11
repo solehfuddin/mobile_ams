@@ -1,40 +1,62 @@
-part of 'pages.dart';
+part of '../pages.dart';
 
 // ignore: must_be_immutable
-class ChangeEmailScreen extends StatefulWidget {
+class ChangeProfileScreen extends StatefulWidget {
   UserModel? user;
-  ChangeEmailScreen({this.user, super.key});
+  ChangeProfileScreen({this.user, super.key});
 
   @override
-  State<ChangeEmailScreen> createState() => _ChangeEmailScreenState();
+  State<ChangeProfileScreen> createState() => _ChangeProfileScreenState();
 }
 
-class _ChangeEmailScreenState extends State<ChangeEmailScreen> {
+class _ChangeProfileScreenState extends State<ChangeProfileScreen> {
   final _profileController = Get.put(ProfileController());
-  bool showPassword = true;
-  final _currentEmailText = TextEditingController();
-  final _newEmailText = TextEditingController();
-  final _passwordText = TextEditingController();
+  final session = SessionServices();
+  final _usernameText = TextEditingController();
+  final _phoneText = TextEditingController();
+  final _addressText = TextEditingController();
+  List<Placemark>? _getAddress;
+  String phoneNumber = "";
 
   @override
   void initState() {
     super.initState();
-    showPassword = true;
-    _currentEmailText.text = widget.user?.email ?? "Not set";
+    widget.user = session.readUserSession();
+    _usernameText.text = widget.user?.username ?? "Not set";
+    getLocationAddress();
+  }
+
+  void getLocationAddress() async {
+    LocationModels loc = session.readLocationSession();
+
+    _getAddress = await placemarkFromCoordinates(
+      loc.latitude ?? 0,
+      loc.longitude ?? 0,
+    );
+
+    setState(() {});
   }
 
   @override
   Widget build(BuildContext context) {
     return Obx(
       () => Scaffold(
+        resizeToAvoidBottomInset: false,
         body: Container(
           width: double.maxFinite,
           height: double.infinity,
           padding: const EdgeInsets.only(
             top: 35,
           ),
-          decoration: const BoxDecoration(
-            color: Colors.white,
+          decoration: BoxDecoration(
+            gradient: LinearGradient(
+              begin: Alignment.topLeft,
+              end: Alignment.bottomRight,
+              colors: [
+                splashColor1.withOpacity(0),
+                splashColor1.withOpacity(0.11),
+              ],
+            ),
           ),
           child: Padding(
             padding: const EdgeInsets.only(
@@ -57,7 +79,7 @@ class _ChangeEmailScreenState extends State<ChangeEmailScreen> {
                           onTap: () => Navigator.pop(context),
                         ),
                         const Text(
-                          'Change Email',
+                          'Edit Profile',
                           style: TextStyle(
                             color: Colors.black,
                             fontWeight: FontWeight.bold,
@@ -74,7 +96,7 @@ class _ChangeEmailScreenState extends State<ChangeEmailScreen> {
                       height: 15,
                     ),
                     const Text(
-                      'Current Email',
+                      'Username',
                       style: TextStyle(
                         color: Colors.black,
                         fontWeight: FontWeight.w400,
@@ -100,19 +122,19 @@ class _ChangeEmailScreenState extends State<ChangeEmailScreen> {
                           horizontal: 8,
                         ),
                       ),
-                      keyboardType: TextInputType.emailAddress,
+                      keyboardType: TextInputType.name,
                       style: const TextStyle(
                         fontSize: 16,
                         color: Colors.grey,
                       ),
                       enabled: false,
-                      controller: _currentEmailText,
+                      controller: _usernameText,
                     ),
                     const SizedBox(
                       height: 15,
                     ),
                     const Text(
-                      'New Email',
+                      'Phone',
                       style: TextStyle(
                         color: Colors.black,
                         fontWeight: FontWeight.w400,
@@ -123,8 +145,9 @@ class _ChangeEmailScreenState extends State<ChangeEmailScreen> {
                     const SizedBox(
                       height: 10,
                     ),
-                    TextField(
+                    IntlPhoneField(
                       decoration: InputDecoration(
+                        labelText: 'Phone Number',
                         border: const OutlineInputBorder(
                           borderRadius: BorderRadius.all(
                             Radius.circular(8),
@@ -134,24 +157,26 @@ class _ChangeEmailScreenState extends State<ChangeEmailScreen> {
                           color: Colors.black,
                         ),
                         contentPadding: const EdgeInsets.symmetric(
-                          vertical: 5,
+                          vertical: 3,
                           horizontal: 8,
                         ),
-                        errorText: _profileController.isCorrectEmail.isTrue
+                        errorText: _profileController.isCorrectPhone.isTrue
                             ? null
-                            : "Incorrect email address",
+                            : "Please complete phone",
                       ),
-                      keyboardType: TextInputType.emailAddress,
-                      style: const TextStyle(
-                        fontSize: 16,
-                      ),
-                      controller: _newEmailText,
+                      initialCountryCode: 'ID',
+                      onChanged: (phone) {
+                        phoneNumber = phone.completeNumber;
+                        _profileController.checkPhone(phoneNumber);
+                      },
+                      disableLengthCheck: true,
+                      controller: _phoneText,
                     ),
                     const SizedBox(
                       height: 15,
                     ),
                     const Text(
-                      'Password',
+                      'Address',
                       style: TextStyle(
                         color: Colors.black,
                         fontWeight: FontWeight.w400,
@@ -163,31 +188,85 @@ class _ChangeEmailScreenState extends State<ChangeEmailScreen> {
                       height: 10,
                     ),
                     TextField(
-                      obscureText: showPassword,
-                      decoration: InputDecoration(
-                        border: const OutlineInputBorder(
+                      decoration: const InputDecoration(
+                        border: OutlineInputBorder(
                           borderRadius: BorderRadius.all(
                             Radius.circular(8),
                           ),
                         ),
-                        labelStyle: const TextStyle(
+                        labelStyle: TextStyle(
                           color: Colors.black,
                         ),
-                        suffixIcon: IconButton(
-                          onPressed: () {
-                            setState(() {
-                              showPassword = !showPassword;
-                            });
-                          },
-                          icon: Icon(showPassword
-                              ? Icons.visibility
-                              : Icons.visibility_off),
+                        contentPadding: EdgeInsets.symmetric(
+                          vertical: 8,
+                          horizontal: 8,
                         ),
-                        errorText: _profileController.isCurrentPassword.isTrue
-                            ? null
-                            : "Please provide password",
                       ),
-                      controller: _passwordText,
+                      keyboardType: TextInputType.multiline,
+                      maxLines: 6,
+                      style: const TextStyle(
+                        fontSize: 16,
+                      ),
+                      controller: _addressText,
+                    ),
+                    const SizedBox(
+                      height: 15,
+                    ),
+                    const Text(
+                      'PinPoint',
+                      style: TextStyle(
+                        color: Colors.black,
+                        fontWeight: FontWeight.w400,
+                        fontFamily: "Inter",
+                        fontSize: 13,
+                      ),
+                    ),
+                    const SizedBox(
+                      height: 10,
+                    ),
+                    Container(
+                      height: 60,
+                      padding: const EdgeInsets.symmetric(
+                        horizontal: 20,
+                      ),
+                      decoration: BoxDecoration(
+                        color: grayLightColor,
+                        borderRadius: BorderRadius.circular(
+                          10,
+                        ),
+                      ),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Row(
+                            children: [
+                              Image.asset(
+                                'assets/images/ic_location.png',
+                                width: 18,
+                                height: 18,
+                              ),
+                              const SizedBox(
+                                width: 10,
+                              ),
+                              Text(
+                                "${_getAddress?[0].street} ${_getAddress?[0].subLocality}, ${_getAddress?[0].subAdministrativeArea}",
+                                style: const TextStyle(
+                                  color: Colors.black,
+                                  fontWeight: FontWeight.w400,
+                                  fontFamily: "Inter",
+                                  fontSize: 13,
+                                ),
+                                softWrap: false,
+                                maxLines: 2,
+                              ),
+                            ],
+                          ),
+                          const Icon(
+                            Icons.arrow_forward_ios,
+                            size: 14,
+                          ),
+                        ],
+                      ),
                     ),
                   ],
                 ),
@@ -202,10 +281,10 @@ class _ChangeEmailScreenState extends State<ChangeEmailScreen> {
                       ),
                       child: ElevatedButton(
                         onPressed: () {
-                          _profileController.changeEmail(
+                          _profileController.changeProfile(
                             context,
-                            _passwordText.text,
-                            _newEmailText.text,
+                            phoneNumber,
+                            _addressText.text,
                           );
                         },
                         style: ElevatedButton.styleFrom(
