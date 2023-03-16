@@ -13,6 +13,7 @@ class _LoginScreenState extends State<LoginScreen> {
   final _passwordText = TextEditingController();
   bool? checkRemember = false;
   bool showPassword = true;
+  String? fcmToken = "";
 
   @override
   void initState() {
@@ -25,6 +26,12 @@ class _LoginScreenState extends State<LoginScreen> {
     if (_usernameText.text.isNotEmpty && _passwordText.text.isNotEmpty) {
       checkRemember = true;
     }
+
+    generateToken();
+  }
+
+  generateToken() async {
+    fcmToken = await FirebaseMessaging.instance.getToken(vapidKey: "empty");
   }
 
   @override
@@ -232,6 +239,7 @@ class _LoginScreenState extends State<LoginScreen> {
                                 context: context,
                                 username: _usernameText.text,
                                 password: _passwordText.text,
+                                token: fcmToken,
                               );
                             }
                           },

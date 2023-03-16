@@ -26,12 +26,18 @@ class LoginController extends GetxController {
         : isPassword.value = false;
   }
 
-  void login({BuildContext? context, String? username, String? password}) {
+  void login({
+    BuildContext? context,
+    String? username,
+    String? password,
+    String? token,
+  }) {
     showDialog(context: context!, builder: (context) => const LoaderWidget());
 
     var formData = {
       "username": username,
       "password": password,
+      "fcm_token": token,
     };
 
     ApiServices().apiLogin(formData).then((value) {

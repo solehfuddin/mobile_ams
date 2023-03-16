@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "659083837640",
+    "project_id": "apk2102",
+    "storage_bucket": "apk2102.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:659083837640:android:13a8674a24a5e29223a5fd",
+        "android_client_info": {
+          "package_name": "com.asiamegatama.apk_ams"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "659083837640-paai7c2uhp3079hpel1c0n72drf2d157.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCeM8wYkjQjyR42dUB2Fb_EL8HBvF4Bp4I"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "659083837640-paai7c2uhp3079hpel1c0n72drf2d157.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
