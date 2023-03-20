@@ -80,4 +80,33 @@ class ApiServices {
 
     return responseApi;
   }
+
+  Future<List<TroubleModel>> apiGetVisiting(var data) async {
+    List<TroubleModel> responseApi = List.empty(growable: true);
+
+    try {
+      var response = await _dio.post(
+        "troubles/getall_by",
+        data: jsonEncode(data),
+        cancelToken: CancelToken(),
+      );
+
+      responseApi = (response.data['data'] as List)
+          .map(
+            (e) => TroubleModel.fromJson(e),
+          )
+          .toList();
+    } on DioError catch (e) {
+      bool sts = false;
+      if (e.response?.statusCode == 400) {
+        sts = false;
+      } else if (e.response?.statusCode == 403) {
+        sts = false;
+      } else {
+        sts = false;
+      }
+    }
+
+    return responseApi;
+  }
 }

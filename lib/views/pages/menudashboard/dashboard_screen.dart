@@ -8,7 +8,7 @@ void callbackDispatcher() {
       case locationBackground:
         // print("Native called background task: $locationBackground");
         Position pos = await Geolocator.getCurrentPosition(
-          desiredAccuracy: LocationAccuracy.high,
+          desiredAccuracy: LocationAccuracy.best,
         );
         notif.showNotificationWithoutSound(pos);
         // print("Your location : ${pos.latitude} , ${pos.longitude}");
@@ -65,7 +65,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
     location.getLocation(context).then((value) => setState((() {
           output = value;
 
-          Workmanager().initialize(callbackDispatcher, isInDebugMode: true);
+          Workmanager().initialize(callbackDispatcher, isInDebugMode: false);
           // Workmanager().registerOneOffTask("1", locationBackground);
 
           Workmanager().registerPeriodicTask(
@@ -82,7 +82,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
 
   void listenOnLocationChanges() {
     const LocationSettings settings = LocationSettings(
-      accuracy: LocationAccuracy.high,
+      accuracy: LocationAccuracy.best,
       distanceFilter: 100,
     );
 
@@ -114,7 +114,9 @@ class _DashboardScreenState extends State<DashboardScreen> {
       body: Stack(
         children: [
           pos == 1
-              ? const VisitingScreen()
+              ? VisitingScreen(
+                  user: widget.user,
+                )
               : pos == 2
                   ? const SelectorupsScreen()
                   : pos == 3

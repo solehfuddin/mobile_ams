@@ -3,6 +3,7 @@ part of 'routes.dart';
 class NavigationGenerator {
   static Route<dynamic> generateRoute(RouteSettings settings) {
     final session = SessionServices();
+    final arguments = settings.arguments;
     switch (settings.name) {
       case '/home':
         return MaterialPageRoute(
@@ -20,7 +21,9 @@ class NavigationGenerator {
         );
       case '/visiting':
         return MaterialPageRoute(
-          builder: (_) => const VisitingScreen(),
+          builder: (_) => VisitingScreen(
+            user: session.readUserSession(),
+          ),
         );
       case '/completed':
         return MaterialPageRoute(
@@ -34,9 +37,24 @@ class NavigationGenerator {
         return MaterialPageRoute(
           builder: (_) => const RescheduleScreen(),
         );
+      case '/detail_visiting':
+        if (arguments is TroubleModel) {
+          return MaterialPageRoute(
+            builder: (_) => DetailVisitingScreen(
+              trouble: arguments,
+            ),
+          );
+        }
+        return MaterialPageRoute(
+          builder: (_) => DetailVisitingScreen(),
+        );
       case '/notification':
         return MaterialPageRoute(
           builder: (_) => const NotificationScreen(),
+        );
+      case '/maps':
+        return MaterialPageRoute(
+          builder: (_) => const MapsScreen(),
         );
       case '/profile':
         return MaterialPageRoute(

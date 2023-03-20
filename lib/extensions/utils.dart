@@ -12,4 +12,18 @@ class Utils {
               .hasMatch(phone)
           ? true
           : false;
+
+  String convertDate(DateTime input) {
+    final DateFormat formatter = DateFormat('dd MMM yyyy');
+    final String formatted = formatter.format(input);
+
+    return formatted;
+  }
+
+  String convertDateTime(DateTime input) {
+    final DateFormat formatter = DateFormat('dd MMM yyyy HH:mm');
+    final String formatted = formatter.format(input);
+
+    return formatted;
+  }
 }

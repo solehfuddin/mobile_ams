@@ -5,11 +5,13 @@ class NotificationServices {
 
   Future showNotificationWithoutSound(Position position) async {
     var androidPlatformChannelSpecifics = const AndroidNotificationDetails(
-        '1', 'location-bg',
-        channelDescription: 'fetch location in background',
-        playSound: false,
-        importance: Importance.max,
-        priority: Priority.high);
+      '1',
+      'location-bg',
+      channelDescription: 'fetch location in background',
+      playSound: false,
+      importance: Importance.max,
+      priority: Priority.high,
+    );
     var iOSPlatformChannelSpecifics =
         const DarwinNotificationDetails(presentSound: false);
     var platformChannelSpecifics = NotificationDetails(
@@ -25,8 +27,10 @@ class NotificationServices {
   }
 
   NotificationServices() {
+    // var initializationSettingsAndroid =
+    //     const AndroidInitializationSettings('@mipmap/ic_launcher');
     var initializationSettingsAndroid =
-        const AndroidInitializationSettings('@mipmap/ic_launcher');
+        const AndroidInitializationSettings('launcher_notification');
     var initializationSettingsIOS = const DarwinInitializationSettings();
     var initializationSettings = InitializationSettings(
         android: initializationSettingsAndroid, iOS: initializationSettingsIOS);

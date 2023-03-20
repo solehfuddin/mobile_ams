@@ -13,3 +13,4 @@ import '../views/widgets/widgets.dart';
 
 part 'login_controller.dart';
 part 'profile_controller.dart';
+part 'trouble_controller.dart';

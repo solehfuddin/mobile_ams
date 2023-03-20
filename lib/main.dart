@@ -33,6 +33,7 @@ class _MyAppState extends State<MyApp> {
                 )
               : const LoginScreen()
           : SplashScreen(),
+      // home: DetailVisitingScreen(),
       onGenerateRoute: NavigationGenerator.generateRoute,
     );
   }
