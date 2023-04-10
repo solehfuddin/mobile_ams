@@ -5,8 +5,6 @@ class TroubleController extends GetxController {
   late UserModel user;
   var technicianId = "".obs;
   var isLoading = false.obs;
-  var isError = false.obs;
-  var errorMsg = "".obs;
   var troubleData = <TroubleModel>[].obs;
 
   TroubleController() {

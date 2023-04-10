@@ -171,7 +171,206 @@ class _VisitingScreenState extends State<VisitingScreen> {
                                               const SizedBox(
                                                 height: 8,
                                               ),
-                                              Row(
+                                              data.rowStateName! == "ON SITE"
+                                                  ? Row(
+                                                      mainAxisAlignment:
+                                                          MainAxisAlignment.end,
+                                                      children: [
+                                                        data.rowStateName! ==
+                                                                "COMPLETE"
+                                                            ? const SizedBox(
+                                                                width: 5,
+                                                              )
+                                                            : SizedBox(
+                                                                width: 140,
+                                                                height: 30,
+                                                                child:
+                                                                    ElevatedButton(
+                                                                  onPressed:
+                                                                      () {
+                                                                    Navigator
+                                                                        .pushNamed(
+                                                                      context,
+                                                                      '/create-record',
+                                                                      arguments:
+                                                                          data,
+                                                                    );
+                                                                  },
+                                                                  style: ElevatedButton
+                                                                      .styleFrom(
+                                                                    backgroundColor:
+                                                                        mainColor,
+                                                                    shape:
+                                                                        RoundedRectangleBorder(
+                                                                      borderRadius:
+                                                                          BorderRadius
+                                                                              .circular(
+                                                                        30,
+                                                                      ),
+                                                                    ),
+                                                                  ),
+                                                                  child:
+                                                                      const Text(
+                                                                    'Create Record',
+                                                                  ),
+                                                                ),
+                                                              ),
+                                                      ],
+                                                    )
+                                                  : Row(
+                                                      mainAxisAlignment:
+                                                          MainAxisAlignment
+                                                              .spaceBetween,
+                                                      children: [
+                                                        Text(
+                                                          data.rowStateName!,
+                                                          style: TextStyle(
+                                                            color: data.rowStateName! ==
+                                                                    "COMPLETE"
+                                                                ? completeTicketColor
+                                                                : processTicketColor,
+                                                            fontWeight:
+                                                                FontWeight.bold,
+                                                            fontFamily: "Inter",
+                                                            fontSize: 14,
+                                                          ),
+                                                        ),
+                                                        data.rowStateName! ==
+                                                                "COMPLETE"
+                                                            ? const SizedBox(
+                                                                width: 5,
+                                                              )
+                                                            : SizedBox(
+                                                                width: 100,
+                                                                height: 30,
+                                                                child:
+                                                                    ElevatedButton(
+                                                                  onPressed:
+                                                                      () {
+                                                                    Navigator
+                                                                        .pushNamed(
+                                                                      context,
+                                                                      '/detail_visiting',
+                                                                      arguments:
+                                                                          data,
+                                                                    );
+                                                                  },
+                                                                  style: ElevatedButton
+                                                                      .styleFrom(
+                                                                    backgroundColor:
+                                                                        mainColor,
+                                                                    shape:
+                                                                        RoundedRectangleBorder(
+                                                                      borderRadius:
+                                                                          BorderRadius
+                                                                              .circular(
+                                                                        30,
+                                                                      ),
+                                                                    ),
+                                                                  ),
+                                                                  child:
+                                                                      const Text(
+                                                                    'Start Job',
+                                                                  ),
+                                                                ),
+                                                              ),
+                                                      ],
+                                                    ),
+                                            ],
+                                          ),
+                                        )
+                                      ]);
+                                } else {
+                                  return Container(
+                                    // crate dynamic height
+                                    constraints: const BoxConstraints(
+                                      maxHeight: double.infinity,
+                                    ),
+                                    margin: const EdgeInsets.symmetric(
+                                      vertical: 8,
+                                    ),
+                                    padding: const EdgeInsets.symmetric(
+                                      vertical: 10,
+                                      horizontal: 15,
+                                    ),
+                                    decoration: BoxDecoration(
+                                      color: Colors.white,
+                                      borderRadius: BorderRadius.circular(
+                                        10,
+                                      ),
+                                    ),
+                                    child: Column(
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.start,
+                                      children: [
+                                        Text(
+                                          data.custName ?? '-',
+                                          style: const TextStyle(
+                                            color: Colors.black,
+                                            fontWeight: FontWeight.bold,
+                                            fontFamily: "Inter",
+                                            fontSize: 14,
+                                          ),
+                                        ),
+                                        const SizedBox(
+                                          height: 5,
+                                        ),
+                                        Text(
+                                          data.address!,
+                                          style: const TextStyle(
+                                            color: Colors.black,
+                                            fontFamily: "Inter",
+                                            fontSize: 12,
+                                          ),
+                                          textAlign: TextAlign.justify,
+                                        ),
+                                        const SizedBox(
+                                          height: 8,
+                                        ),
+                                        data.rowStateName! == "ON SITE"
+                                            ? Row(
+                                                mainAxisAlignment:
+                                                    MainAxisAlignment.end,
+                                                children: [
+                                                  data.rowStateName! ==
+                                                          "COMPLETE"
+                                                      ? const SizedBox(
+                                                          width: 5,
+                                                        )
+                                                      : SizedBox(
+                                                          width: 140,
+                                                          height: 30,
+                                                          child: ElevatedButton(
+                                                            onPressed: () {
+                                                              Navigator
+                                                                  .pushNamed(
+                                                                context,
+                                                                '/create-record',
+                                                                arguments: data,
+                                                              );
+                                                            },
+                                                            style:
+                                                                ElevatedButton
+                                                                    .styleFrom(
+                                                              backgroundColor:
+                                                                  mainColor,
+                                                              shape:
+                                                                  RoundedRectangleBorder(
+                                                                borderRadius:
+                                                                    BorderRadius
+                                                                        .circular(
+                                                                  30,
+                                                                ),
+                                                              ),
+                                                            ),
+                                                            child: const Text(
+                                                              'Create Record',
+                                                            ),
+                                                          ),
+                                                        ),
+                                                ],
+                                              )
+                                            : Row(
                                                 mainAxisAlignment:
                                                     MainAxisAlignment
                                                         .spaceBetween,
@@ -227,108 +426,6 @@ class _VisitingScreenState extends State<VisitingScreen> {
                                                         ),
                                                 ],
                                               ),
-                                            ],
-                                          ),
-                                        )
-                                      ]);
-                                } else {
-                                  return Container(
-                                    // crate dynamic height
-                                    constraints: const BoxConstraints(
-                                      maxHeight: double.infinity,
-                                    ),
-                                    margin: const EdgeInsets.symmetric(
-                                      vertical: 8,
-                                    ),
-                                    padding: const EdgeInsets.symmetric(
-                                      vertical: 10,
-                                      horizontal: 15,
-                                    ),
-                                    decoration: BoxDecoration(
-                                      color: Colors.white,
-                                      borderRadius: BorderRadius.circular(
-                                        10,
-                                      ),
-                                    ),
-                                    child: Column(
-                                      crossAxisAlignment:
-                                          CrossAxisAlignment.start,
-                                      children: [
-                                        Text(
-                                          data.custName ?? '-',
-                                          style: const TextStyle(
-                                            color: Colors.black,
-                                            fontWeight: FontWeight.bold,
-                                            fontFamily: "Inter",
-                                            fontSize: 14,
-                                          ),
-                                        ),
-                                        const SizedBox(
-                                          height: 5,
-                                        ),
-                                        Text(
-                                          data.address!,
-                                          style: const TextStyle(
-                                            color: Colors.black,
-                                            fontFamily: "Inter",
-                                            fontSize: 12,
-                                          ),
-                                          textAlign: TextAlign.justify,
-                                        ),
-                                        const SizedBox(
-                                          height: 8,
-                                        ),
-                                        Row(
-                                          mainAxisAlignment:
-                                              MainAxisAlignment.spaceBetween,
-                                          children: [
-                                            Text(
-                                              data.rowStateName!,
-                                              style: TextStyle(
-                                                color: data.rowStateName! ==
-                                                        "COMPLETE"
-                                                    ? completeTicketColor
-                                                    : processTicketColor,
-                                                fontWeight: FontWeight.bold,
-                                                fontFamily: "Inter",
-                                                fontSize: 14,
-                                              ),
-                                            ),
-                                            data.rowStateName! == "COMPLETE"
-                                                ? const SizedBox(
-                                                    width: 5,
-                                                  )
-                                                : SizedBox(
-                                                    width: 100,
-                                                    height: 30,
-                                                    child: ElevatedButton(
-                                                      onPressed: () {
-                                                        Navigator.pushNamed(
-                                                          context,
-                                                          '/detail_visiting',
-                                                          arguments: data,
-                                                        );
-                                                      },
-                                                      style: ElevatedButton
-                                                          .styleFrom(
-                                                        backgroundColor:
-                                                            mainColor,
-                                                        shape:
-                                                            RoundedRectangleBorder(
-                                                          borderRadius:
-                                                              BorderRadius
-                                                                  .circular(
-                                                            30,
-                                                          ),
-                                                        ),
-                                                      ),
-                                                      child: const Text(
-                                                        'Start Job',
-                                                      ),
-                                                    ),
-                                                  ),
-                                          ],
-                                        ),
                                       ],
                                     ),
                                   );

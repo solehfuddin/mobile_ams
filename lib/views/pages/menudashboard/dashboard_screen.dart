@@ -12,17 +12,6 @@ void callbackDispatcher() {
         );
         notif.showNotificationWithoutSound(pos);
         // print("Your location : ${pos.latitude} , ${pos.longitude}");
-
-        // session.writeLocationSession(
-        //   LocationModels(
-        //     pos.latitude,
-        //     pos.longitude,
-        //   ),
-        // );
-        // profileController.changeLocation(
-        //   pos.latitude,
-        //   pos.longitude,
-        // );
         break;
     }
     return Future.value(true);
@@ -45,6 +34,15 @@ class _DashboardScreenState extends State<DashboardScreen> {
   LocationModels output = LocationModels(0, 0);
   StreamSubscription<Position>? positionStream;
   final session = SessionServices();
+  final AndroidNotificationChannel channel = const AndroidNotificationChannel(
+    'high_importance_channel', // id
+    'High Importance Notifications', // title
+    description: "Description",
+    importance: Importance.high,
+    playSound: true,
+  );
+  final FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin =
+      FlutterLocalNotificationsPlugin();
 
   void _onData(int pos) {
     setState(() {
@@ -78,6 +76,55 @@ class _DashboardScreenState extends State<DashboardScreen> {
 
           listenOnLocationChanges();
         })));
+
+    var androidPlatformChannelSpecifics = const AndroidNotificationDetails(
+      '2',
+      'fcm-bg',
+      channelDescription: 'fetch location in background',
+      playSound: false,
+      importance: Importance.max,
+      priority: Priority.high,
+    );
+    var iOSPlatformChannelSpecifics =
+        const DarwinNotificationDetails(presentSound: false);
+    var platformChannelSpecifics = NotificationDetails(
+        android: androidPlatformChannelSpecifics,
+        iOS: iOSPlatformChannelSpecifics);
+
+    //On App Open
+    FirebaseMessaging.onMessage.listen((RemoteMessage message) {
+      RemoteNotification notification = message.notification!;
+      flutterLocalNotificationsPlugin.show(
+        notification.hashCode,
+        notification.title,
+        notification.body,
+        platformChannelSpecifics,
+        payload: '',
+      );
+    });
+
+    FirebaseMessaging.onMessageOpenedApp.listen((RemoteMessage message) {
+      // print('A new messageopen app event was published');
+      // RemoteNotification notification = message.notification!;
+      // showDialog(
+      //     context: context,
+      //     builder: (_) {
+      //       return AlertDialog(
+      //         title: Text(notification.title!),
+      //         content: SingleChildScrollView(
+      //           child: Column(
+      //             crossAxisAlignment: CrossAxisAlignment.start,
+      //             children: [Text(notification.body!)],
+      //           ),
+      //         ),
+      //       );
+      //     });
+
+      Navigator.pushNamed(
+        context,
+        '/process',
+      );
+    });
   }
 
   void listenOnLocationChanges() {

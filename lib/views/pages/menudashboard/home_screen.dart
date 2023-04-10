@@ -207,6 +207,51 @@ class _HomeScreenState extends State<HomeScreen> {
                   onTap: () {
                     Navigator.pushNamed(
                       context,
+                      '/onsite',
+                    );
+                  },
+                  child: Container(
+                    decoration: const BoxDecoration(
+                      color: Colors.white,
+                      borderRadius: BorderRadius.all(
+                        Radius.circular(
+                          20,
+                        ),
+                      ),
+                    ),
+                    width: 148,
+                    height: 148,
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Image.asset(
+                          'assets/images/dashboard_job.png',
+                          width: 100,
+                          height: 100,
+                        ),
+                        const Text(
+                          'On Site',
+                          style: TextStyle(
+                            fontWeight: FontWeight.w700,
+                            fontFamily: "Inter",
+                            fontSize: 15,
+                          ),
+                        )
+                      ],
+                    ),
+                  ),
+                ),
+              ),
+              const SizedBox(
+                width: 25,
+              ),
+              Expanded(
+                flex: 1,
+                child: GestureDetector(
+                  onTap: () {
+                    Navigator.pushNamed(
+                      context,
                       '/reschedule',
                     );
                   },
@@ -242,47 +287,6 @@ class _HomeScreenState extends State<HomeScreen> {
                     ),
                   ),
                 ),
-              ),
-              const SizedBox(
-                width: 25,
-              ),
-              Expanded(
-                flex: 1,
-                child: Container(),
-                // child: GestureDetector(
-                //   onTap: () {},
-                //   child: Container(
-                //     decoration: const BoxDecoration(
-                //       color: Colors.white,
-                //       borderRadius: BorderRadius.all(
-                //         Radius.circular(
-                //           20,
-                //         ),
-                //       ),
-                //     ),
-                //     width: 148,
-                //     height: 148,
-                //     child: Column(
-                //       crossAxisAlignment: CrossAxisAlignment.center,
-                //       mainAxisAlignment: MainAxisAlignment.center,
-                //       children: [
-                //         Image.asset(
-                //           'assets/images/dashboard_complain.png',
-                //           width: 100,
-                //           height: 100,
-                //         ),
-                //         const Text(
-                //           'Complain',
-                //           style: TextStyle(
-                //             fontWeight: FontWeight.w700,
-                //             fontFamily: "Inter",
-                //             fontSize: 15,
-                //           ),
-                //         )
-                //       ],
-                //     ),
-                //   ),
-                // ),
               ),
             ],
           ),

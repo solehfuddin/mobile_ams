@@ -15,6 +15,8 @@ class TroubleModel {
       areaCode,
       phoneNumber,
       rowState,
+      video,
+      prPhoto,
       isSolved,
       reason,
       userInput,
@@ -22,7 +24,16 @@ class TroubleModel {
       createdAt,
       custName,
       rowStateName,
-      categoryName;
+      categoryName,
+      technicianName,
+      baseLatt,
+      baseLong,
+      baseName,
+      baseAddress;
+
+  int distance;
+
+  String file;
 
   TroubleModel(
       this.troubleId,
@@ -39,6 +50,9 @@ class TroubleModel {
       this.areaCode,
       this.phoneNumber,
       this.rowState,
+      this.video,
+      this.file,
+      this.prPhoto,
       this.isSolved,
       this.reason,
       this.userInput,
@@ -46,7 +60,13 @@ class TroubleModel {
       this.createdAt,
       this.custName,
       this.rowStateName,
-      this.categoryName);
+      this.categoryName,
+      this.technicianName,
+      this.baseLatt,
+      this.baseLong,
+      this.baseName,
+      this.baseAddress,
+      this.distance);
 
   TroubleModel.fromJson(Map<String, dynamic> json)
       : troubleId = json['trouble_id'],
@@ -63,6 +83,9 @@ class TroubleModel {
         areaCode = json['area_code'],
         phoneNumber = json['phone_number'],
         rowState = json['rowstate'],
+        video = json['video'] ?? "",
+        file = json['file'] ?? "",
+        prPhoto = json['pr_photo'] ?? "",
         isSolved = json['is_solved'],
         reason = json['reason'],
         userInput = json['user_input'],
@@ -70,7 +93,13 @@ class TroubleModel {
         createdAt = json['created_at'],
         custName = json['cust_name'],
         rowStateName = json['rowstate_name'],
-        categoryName = json['categories_name'];
+        categoryName = json['categories_name'],
+        technicianName = json['technician_name'],
+        baseLatt = json['area_lat'] ?? "",
+        baseLong = json['area_long'] ?? "",
+        baseName = json['area_name'],
+        baseAddress = json['area_address'],
+        distance = json['distance'] ?? 15;
 
   Map<String, dynamic> toJson() => {
         'trouble_id': troubleId,
@@ -87,6 +116,9 @@ class TroubleModel {
         'area_code': areaCode,
         'phone_number': phoneNumber,
         'rowstate': rowState,
+        'video': video,
+        'file': file,
+        'pr_photo': prPhoto,
         'is_solved': isSolved,
         'reason': reason,
         'user_input': userInput,
@@ -94,6 +126,12 @@ class TroubleModel {
         'created_at': createdAt,
         'cust_name': custName,
         'rowstate_name': rowStateName,
-        'categories_name': categoryName
+        'categories_name': categoryName,
+        'technician_name': technicianName,
+        'area_lat': baseLatt,
+        'area_long': baseLong,
+        'area_name': baseName,
+        'area_address': baseAddress,
+        'distance': distance,
       };
 }

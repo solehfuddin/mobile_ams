@@ -33,6 +33,10 @@ class NavigationGenerator {
         return MaterialPageRoute(
           builder: (_) => const ProcessScreen(),
         );
+      case '/onsite':
+        return MaterialPageRoute(
+          builder: (_) => const OnsiteScreen(),
+        );
       case '/reschedule':
         return MaterialPageRoute(
           builder: (_) => const RescheduleScreen(),
@@ -53,8 +57,15 @@ class NavigationGenerator {
           builder: (_) => const NotificationScreen(),
         );
       case '/maps':
+        if (arguments is TroubleModel) {
+          return MaterialPageRoute(
+            builder: (_) => MapsScreen(
+              trouble: arguments,
+            ),
+          );
+        }
         return MaterialPageRoute(
-          builder: (_) => const MapsScreen(),
+          builder: (_) => MapsScreen(),
         );
       case '/profile':
         return MaterialPageRoute(
@@ -77,6 +88,28 @@ class NavigationGenerator {
           builder: (_) => ChangeEmailScreen(
             user: session.readUserSession(),
           ),
+        );
+      case '/create-record':
+        if (arguments is TroubleModel) {
+          return MaterialPageRoute(
+            builder: (_) => UpsScreen(
+              trouble: arguments,
+            ),
+          );
+        }
+        return MaterialPageRoute(
+          builder: (_) => UpsScreen(),
+        );
+      case '/success':
+        if (arguments is SuccessModels) {
+          return MaterialPageRoute(
+            builder: (_) => SuccessScreen(
+              success: arguments,
+            ),
+          );
+        }
+        return MaterialPageRoute(
+          builder: (_) => SuccessScreen(),
         );
       default:
         return _errorRoute();

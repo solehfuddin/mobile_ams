@@ -18,6 +18,7 @@ class SessionServices {
   final _idlestsKey = "idlests";
   final _levelKey = "level";
   final _isactiveKey = "isActive";
+  final _fcmTokenKey = "fcmToken";
   final _createatKey = "createdAt";
   final _rememberuserKey = "rememberusername";
   final _rememberpassKey = "rememberpassword";
@@ -45,6 +46,7 @@ class SessionServices {
     _mySession.write(_idlestsKey, user?.idlests);
     _mySession.write(_levelKey, user?.level);
     _mySession.write(_isactiveKey, user?.isActive);
+    _mySession.write(_fcmTokenKey, user?.fcmToken);
     _mySession.write(_createatKey, user?.createdAt);
   }
 
@@ -75,6 +77,7 @@ class SessionServices {
     _mySession.remove(_idlestsKey);
     _mySession.remove(_levelKey);
     _mySession.remove(_isactiveKey);
+    _mySession.remove(_fcmTokenKey);
     _mySession.remove(_createatKey);
 
     SystemNavigator.pop();
@@ -96,6 +99,7 @@ class SessionServices {
       _mySession.read(_idlestsKey),
       _mySession.read(_levelKey),
       _mySession.read(_isactiveKey),
+      _mySession.read(_fcmTokenKey),
       _mySession.read(_createatKey),
     );
   }

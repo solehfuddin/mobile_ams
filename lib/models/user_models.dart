@@ -15,6 +15,7 @@ class UserModel {
       idlests,
       level,
       isActive,
+      fcmToken,
       createdAt;
 
   UserModel(
@@ -32,6 +33,7 @@ class UserModel {
     this.idlests,
     this.level,
     this.isActive,
+    this.fcmToken,
     this.createdAt,
   );
 
@@ -49,6 +51,7 @@ class UserModel {
         idlests = json['idle_status'],
         level = json['level'],
         isActive = json['is_active'],
+        fcmToken = json['fcm_token'] ?? "",
         createdAt = json['created_at'];
 
   Map<String, dynamic> toJson() => {
@@ -65,6 +68,7 @@ class UserModel {
         'idle_status': idlests,
         'level': level,
         'is_active': isActive,
+        'fcm_token': fcmToken,
         'created_at': createdAt,
       };
 }

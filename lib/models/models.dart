@@ -5,3 +5,7 @@ part 'remember_models.dart';
 part 'global_models.dart';
 part 'trouble_res_models.dart';
 part 'trouble_models.dart';
+part 'media_models.dart';
+part 'notification_models.dart';
+part 'success_models.dart';
+part 'feedback_models.dart';

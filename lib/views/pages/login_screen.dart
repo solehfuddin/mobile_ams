@@ -32,6 +32,7 @@ class _LoginScreenState extends State<LoginScreen> {
 
   generateToken() async {
     fcmToken = await FirebaseMessaging.instance.getToken(vapidKey: "empty");
+    // print(fcmToken);
   }
 
   @override

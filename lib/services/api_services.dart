@@ -109,4 +109,90 @@ class ApiServices {
 
     return responseApi;
   }
+
+  Future<List<NotificationModel>> apiGetNotification(var data) async {
+    List<NotificationModel> responseApi = List.empty(growable: true);
+
+    try {
+      var response = await _dio.post(
+        "notifications/getall_by",
+        data: jsonEncode(data),
+        cancelToken: CancelToken(),
+      );
+
+      // print(response);
+
+      responseApi = (response.data['data'] as List)
+          .map(
+            (e) => NotificationModel.fromJson(e),
+          )
+          .toList();
+    } on DioError catch (e) {
+      bool sts = false;
+      if (e.response?.statusCode == 400) {
+        sts = false;
+      } else if (e.response?.statusCode == 403) {
+        sts = false;
+      } else {
+        sts = false;
+      }
+    }
+
+    return responseApi;
+  }
+
+  Future<GlobalModels> apiUpdateTrouble(var data) async {
+    late GlobalModels responseApi;
+
+    try {
+      var response = await _dio.put(
+        "troubles/update_trouble",
+        data: jsonEncode(data),
+        cancelToken: CancelToken(),
+      );
+
+      responseApi = GlobalModels.fromJson(response.data);
+    } on DioError catch (e) {
+      String sts = "";
+      if (e.response?.statusCode == 401) {
+        sts = "Please check data";
+      } else if (e.response?.statusCode == 403) {
+        sts = "Invalid API key";
+      } else {
+        sts = "General Error";
+      }
+
+      responseApi = GlobalModels(false, sts);
+    }
+
+    return responseApi;
+  }
+
+  Future<GlobalModels> apiPostFeedback(var data) async {
+    late GlobalModels responseApi;
+
+    try {
+      var response = await _dio.post(
+        "trouble_feedbacks",
+        // data: jsonEncode(data),
+        data: data,
+        cancelToken: CancelToken(),
+      );
+
+      responseApi = GlobalModels.fromJson(response.data);
+    } on DioError catch (e) {
+      String sts = "";
+      if (e.response?.statusCode == 401) {
+        sts = "Please check data";
+      } else if (e.response?.statusCode == 403) {
+        sts = "Invalid API key";
+      } else {
+        sts = "General Error";
+      }
+
+      responseApi = GlobalModels(false, sts);
+    }
+
+    return responseApi;
+  }
 }

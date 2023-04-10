@@ -392,39 +392,94 @@ class _DetailVisitingScreenState extends State<DetailVisitingScreen> {
                         ),
                       ),
                       const SizedBox(
-                        height: 15,
+                        height: 20,
                       ),
-                      Container(
-                        // crate dynamic height
-                        constraints: const BoxConstraints(
-                          minHeight: 150,
-                          maxHeight: double.infinity,
-                          minWidth: double.infinity,
-                        ),
-                        padding: const EdgeInsets.symmetric(
-                          vertical: 10,
-                          horizontal: 15,
-                        ),
-                        decoration: BoxDecoration(
-                          color: Colors.white,
-                          borderRadius: BorderRadius.circular(
-                            10,
-                          ),
-                        ),
-                        child: const Center(
-                          child: Text(
-                            'Foto / Video View Here',
-                            style: TextStyle(
-                              color: Colors.grey,
-                              fontWeight: FontWeight.bold,
-                              fontFamily: "Inter",
-                              fontSize: 18,
+                      widget.trouble!.file != ""
+                          ? const Text(
+                              'Gambar Attachment',
+                              style: TextStyle(
+                                color: Colors.black,
+                                fontWeight: FontWeight.bold,
+                                fontFamily: "Inter",
+                                fontSize: 14,
+                              ),
+                            )
+                          : const SizedBox(
+                              width: 5,
                             ),
-                          ),
-                        ),
-                      ),
+                      widget.trouble!.file != ""
+                          ? const SizedBox(
+                              height: 10,
+                            )
+                          : const SizedBox(
+                              width: 5,
+                            ),
+                      widget.trouble!.file != ""
+                          ? Container(
+                              height: 210,
+                              width: double.infinity,
+                              padding: const EdgeInsets.symmetric(
+                                vertical: 10,
+                                horizontal: 15,
+                              ),
+                              decoration: BoxDecoration(
+                                color: Colors.white,
+                                borderRadius: BorderRadius.circular(
+                                  10,
+                                ),
+                              ),
+                              child: GestureDetector(
+                                child: Image.network(
+                                  widget.trouble!.file,
+                                ),
+                                onTap: () {
+                                  showDialog(
+                                    context: context,
+                                    builder: (ctx) => ImageWidget(
+                                      imageUrl: widget.trouble!.file,
+                                    ),
+                                  );
+                                },
+                              ),
+                            )
+                          : const SizedBox(
+                              width: 5,
+                            ),
                       const SizedBox(
                         height: 20,
+                      ),
+                      widget.trouble!.video != ""
+                          ? const Text(
+                              'Video Attachment',
+                              style: TextStyle(
+                                color: Colors.black,
+                                fontWeight: FontWeight.bold,
+                                fontFamily: "Inter",
+                                fontSize: 14,
+                              ),
+                            )
+                          : const SizedBox(width: 5),
+                      widget.trouble!.video != ""
+                          ? const SizedBox(
+                              height: 10,
+                            )
+                          : const SizedBox(width: 5),
+                      widget.trouble!.video != ""
+                          ? Container(
+                              height: 210,
+                              decoration: BoxDecoration(
+                                color: Colors.white,
+                                borderRadius: BorderRadius.circular(
+                                  10,
+                                ),
+                              ),
+                              child: VideoWidget(
+                                videoUrl: widget.trouble!.video,
+                              ),
+                            )
+                          : const SizedBox(width: 5),
+                      const SizedBox(
+                        height: 25,
                       ),
                       Align(
                         alignment: Alignment.centerRight,
@@ -436,6 +491,7 @@ class _DetailVisitingScreenState extends State<DetailVisitingScreen> {
                               Navigator.pushNamed(
                                 context,
                                 '/maps',
+                                arguments: widget.trouble,
                               );
                             },
                             style: ElevatedButton.styleFrom(
