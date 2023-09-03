@@ -12,7 +12,7 @@ class UpsScreen extends StatefulWidget {
 class _UpsScreenState extends State<UpsScreen> {
   final _feedbackController = Get.put(FeedbackController());
 
-  List<bool> expanded = [false, false, false, false];
+  List<bool> expanded = [false, false, false, false, false];
   String upsBrand = 'APC',
       snmpCard = '-- Belum dipilih --',
       epo = '-- Belum dipilih --',
@@ -33,11 +33,25 @@ class _UpsScreenState extends State<UpsScreen> {
       imageSelect = '',
       imageLocation = '',
       videoLocation = '',
-      digitalSign = '';
+      digitalSign = '',
+      digitalTech1Sign = '',
+      digitalTech2Sign = '';
   File? videoSelect;
-  // late List<int> digitalSign;
   final format = DateFormat("dd/MM/yyyy");
+  final DateTime date = DateTime.now();
   final SignatureController _signController = SignatureController(
+    penStrokeWidth: 3,
+    penColor: Colors.black,
+    exportBackgroundColor: Colors.white,
+  );
+
+  final SignatureController _signTech1Controller = SignatureController(
+    penStrokeWidth: 3,
+    penColor: Colors.black,
+    exportBackgroundColor: Colors.white,
+  );
+
+  final SignatureController _signTech2Controller = SignatureController(
     penStrokeWidth: 3,
     penColor: Colors.black,
     exportBackgroundColor: Colors.white,
@@ -68,6 +82,9 @@ class _UpsScreenState extends State<UpsScreen> {
   final _fotoText = TextEditingController();
   final _videoText = TextEditingController();
   final _videoDescText = TextEditingController();
+  final _signatureNameText = TextEditingController();
+  final _signNameTech1Text = TextEditingController();
+  final _signNameTech2Text = TextEditingController();
 
   @override
   void initState() {
@@ -80,9 +97,10 @@ class _UpsScreenState extends State<UpsScreen> {
     try {
       await picker
           .pickImage(
-        source: ImageSource.gallery,
+        // source: ImageSource.gallery,
+        source: ImageSource.camera,
         imageQuality: 70,
-        preferredCameraDevice: CameraDevice.front,
+        preferredCameraDevice: CameraDevice.rear,
       )
           .then(
         (value) {
@@ -107,7 +125,8 @@ class _UpsScreenState extends State<UpsScreen> {
     try {
       await picker
           .pickVideo(
-        source: ImageSource.gallery,
+        // source: ImageSource.gallery,
+        source: ImageSource.camera,
         maxDuration: const Duration(
           minutes: 2,
         ),
@@ -126,61 +145,75 @@ class _UpsScreenState extends State<UpsScreen> {
   }
 
   void save() {
-    FeedbackModel feed = FeedbackModel(
-      troubleNoIndex: widget.trouble!.troubleNo,
-      upsBrand: upsBrand,
-      model: _upsmodelText.text,
-      serialNumber: _serialnumberText.text,
-      factoryProd: _factoryprodText.text,
-      upsCapacity: _upsvakvaText.text,
-      upsCover: _upswattText.text,
-      inputUps: _upsinputText.text,
-      inputPln: _plninputText.text,
-      outputUps: _upsOutputText.text,
-      load: _loadText.text,
-      assesmentDate: _assesmentDateText.text,
-      storeHead: _kepalakantorText.text,
-      store: _kantorText.text,
-      snmpCard: snmpCard == "-- Belum dipilih --" ? "" : snmpCard,
-      epo: epo == "-- Belum dipilih --" ? "" : epo,
-      conditionBatt1: batt1 == "-- Belum dipilih --" ? "" : batt1,
-      conditionBatt2: batt2 == "-- Belum dipilih --" ? "" : batt2,
-      conditionBatt3: batt3 == "-- Belum dipilih --" ? "" : batt3,
-      conditionBatt4: batt4 == "-- Belum dipilih --" ? "" : batt4,
-      voltageBatt1: _teganganBatt1Text.text,
-      voltageBatt2: _teganganBatt2Text.text,
-      voltageBatt3: _teganganBatt3Text.text,
-      voltageBatt4: _teganganBatt4Text.text,
-      plnInstallation: _plnToPanelText.text,
-      cableSize: _detailKabelText.text,
-      stdCable: standardKabel == "-- Belum dipilih --" ? "" : standardKabel,
-      stabilizer: stabilizer == "-- Belum dipilih --" ? "" : stabilizer,
-      mcb: mcb == "-- Belum dipilih --" ? "" : mcb,
-      stabilizerCapacity: _kapasitasStabilizerText.text,
-      mcbCapacity: _kapasitasMcbText.text,
-      surgeArrester:
-          surgeArrester == "-- Belum dipilih --" ? "" : surgeArrester,
-      roomTemperature: suhu == "-- Belum dipilih --" ? "" : suhu,
-      grounding: grounding == "-- Belum dipilih --" ? "" : grounding,
-      panelInstallation: _panelToUpsText.text,
-      commUpsBatt1: upstobatt1 == "-- Belum dipilih --" ? "" : upstobatt1,
-      commUpsBatt2: upstobatt2 == "-- Belum dipilih --" ? "" : upstobatt2,
-      commUpsBatt3: upstobatt3 == "-- Belum dipilih --" ? "" : upstobatt3,
-      commUpsBatt4: upstobatt4 == "-- Belum dipilih --" ? "" : upstobatt4,
-      saranPerbaikan: _saranText.text,
-      reason: _videoDescText.text,
-      photo: imageSelect,
-      video: videoSelect!.path,
-      videoDescription: _videoDescText.text,
-      signature: digitalSign,
-      userInput: "System",
-    );
+    if (imageSelect.isNotEmpty && videoSelect!.path.isNotEmpty) {
+      FeedbackModel feed = FeedbackModel(
+        troubleNoIndex: widget.trouble!.troubleNo,
+        upsBrand: upsBrand,
+        model: _upsmodelText.text,
+        serialNumber: _serialnumberText.text,
+        factoryProd: _factoryprodText.text,
+        upsCapacity: _upsvakvaText.text,
+        upsCover: _upswattText.text,
+        inputUps: _upsinputText.text,
+        inputPln: _plninputText.text,
+        outputUps: _upsOutputText.text,
+        load: _loadText.text,
+        assesmentDate: date.convertStringToDb(_assesmentDateText.text),
+        storeHead: _kepalakantorText.text,
+        store: _kantorText.text,
+        snmpCard: snmpCard == "-- Belum dipilih --" ? "" : snmpCard,
+        epo: epo == "-- Belum dipilih --" ? "" : epo,
+        conditionBatt1: batt1 == "-- Belum dipilih --" ? "" : batt1,
+        conditionBatt2: batt2 == "-- Belum dipilih --" ? "" : batt2,
+        conditionBatt3: batt3 == "-- Belum dipilih --" ? "" : batt3,
+        conditionBatt4: batt4 == "-- Belum dipilih --" ? "" : batt4,
+        voltageBatt1: _teganganBatt1Text.text,
+        voltageBatt2: _teganganBatt2Text.text,
+        voltageBatt3: _teganganBatt3Text.text,
+        voltageBatt4: _teganganBatt4Text.text,
+        plnInstallation: _plnToPanelText.text,
+        cableSize: _detailKabelText.text,
+        stdCable: standardKabel == "-- Belum dipilih --" ? "" : standardKabel,
+        stabilizer: stabilizer == "-- Belum dipilih --" ? "" : stabilizer,
+        mcb: mcb == "-- Belum dipilih --" ? "" : mcb,
+        stabilizerCapacity: _kapasitasStabilizerText.text,
+        mcbCapacity: _kapasitasMcbText.text,
+        surgeArrester:
+            surgeArrester == "-- Belum dipilih --" ? "" : surgeArrester,
+        roomTemperature: suhu == "-- Belum dipilih --" ? "" : suhu,
+        grounding: grounding == "-- Belum dipilih --" ? "" : grounding,
+        panelInstallation: _panelToUpsText.text,
+        commUpsBatt1: upstobatt1 == "-- Belum dipilih --" ? "" : upstobatt1,
+        commUpsBatt2: upstobatt2 == "-- Belum dipilih --" ? "" : upstobatt2,
+        commUpsBatt3: upstobatt3 == "-- Belum dipilih --" ? "" : upstobatt3,
+        commUpsBatt4: upstobatt4 == "-- Belum dipilih --" ? "" : upstobatt4,
+        saranPerbaikan: _saranText.text,
+        reason: _videoDescText.text,
+        photo: imageSelect,
+        video: videoSelect!.path,
+        videoDescription: _videoDescText.text,
+        signature: digitalSign,
+        signatureName: _signatureNameText.text,
+        signatureTech1: digitalTech1Sign,
+        nameTech1: _signNameTech1Text.text,
+        signatureTech2: digitalTech2Sign,
+        nameTech2: _signNameTech2Text.text,
+        userInput: "System",
+      );
 
-    // ignore: use_build_context_synchronously
-    _feedbackController.sendFeedback(
-      context,
-      feed,
-    );
+      // ignore: use_build_context_synchronously
+      _feedbackController.sendFeedback(
+        context,
+        feed,
+      );
+    } else {
+      showDialog(
+        context: context,
+        builder: (context) => ErrorDialog(
+          "Upload photo and video is required",
+        ),
+      );
+    }
   }
 
   @override
@@ -2399,6 +2432,199 @@ class _UpsScreenState extends State<UpsScreen> {
                               return const Padding(
                                 padding: EdgeInsets.all(15),
                                 child: Text(
+                                  "Technician Signature",
+                                  style: TextStyle(
+                                    color: Colors.black,
+                                    fontWeight: FontWeight.w700,
+                                    fontFamily: "Inter",
+                                    fontSize: 16,
+                                  ),
+                                ),
+                              );
+                            },
+                            body: Container(
+                              padding: const EdgeInsets.symmetric(
+                                horizontal: 15,
+                              ),
+                              child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  const Text(
+                                    'Nama Teknisi 1',
+                                    style: TextStyle(
+                                      color: Colors.black,
+                                      fontWeight: FontWeight.w400,
+                                      fontFamily: "Inter",
+                                      fontSize: 14,
+                                    ),
+                                    textAlign: TextAlign.start,
+                                  ),
+                                  const SizedBox(
+                                    height: 5,
+                                  ),
+                                  TextField(
+                                    decoration: const InputDecoration(
+                                      border: OutlineInputBorder(
+                                        borderRadius: BorderRadius.all(
+                                          Radius.circular(8),
+                                        ),
+                                      ),
+                                      labelStyle: TextStyle(
+                                        color: Colors.black,
+                                      ),
+                                      contentPadding: EdgeInsets.symmetric(
+                                        vertical: 10,
+                                        horizontal: 8,
+                                      ),
+                                    ),
+                                    style: const TextStyle(
+                                      fontSize: 16,
+                                      color: Colors.grey,
+                                    ),
+                                    controller: _signNameTech1Text,
+                                  ),
+                                  const SizedBox(
+                                    height: 15,
+                                  ),
+                                  const Text(
+                                    'Ttd Teknisi 1',
+                                    style: TextStyle(
+                                      color: Colors.black,
+                                      fontWeight: FontWeight.w400,
+                                      fontFamily: "Inter",
+                                      fontSize: 14,
+                                    ),
+                                    textAlign: TextAlign.start,
+                                  ),
+                                  const SizedBox(
+                                    height: 5,
+                                  ),
+                                  Signature(
+                                    controller: _signTech1Controller,
+                                    height: 150,
+                                    backgroundColor: Colors.blueGrey.shade50,
+                                  ),
+                                  const SizedBox(
+                                    height: 15,
+                                  ),
+                                  ElevatedButton(
+                                    style: ElevatedButton.styleFrom(
+                                      shape: const StadiumBorder(),
+                                      backgroundColor: Colors.orange[800],
+                                      padding: const EdgeInsets.symmetric(
+                                        horizontal: 20,
+                                        vertical: 10,
+                                      ),
+                                    ),
+                                    child: const Text(
+                                      'Bersihkan',
+                                      style: TextStyle(
+                                        color: Colors.white,
+                                        fontSize: 14,
+                                        fontWeight: FontWeight.bold,
+                                        fontFamily: 'Inter',
+                                      ),
+                                    ),
+                                    onPressed: () {
+                                      _signTech1Controller.clear();
+                                    },
+                                  ),
+                                  const SizedBox(
+                                    height: 15,
+                                  ),
+                                  const Text(
+                                    'Nama Teknisi 2',
+                                    style: TextStyle(
+                                      color: Colors.black,
+                                      fontWeight: FontWeight.w400,
+                                      fontFamily: "Inter",
+                                      fontSize: 14,
+                                    ),
+                                    textAlign: TextAlign.start,
+                                  ),
+                                  const SizedBox(
+                                    height: 5,
+                                  ),
+                                  TextField(
+                                    decoration: const InputDecoration(
+                                      border: OutlineInputBorder(
+                                        borderRadius: BorderRadius.all(
+                                          Radius.circular(8),
+                                        ),
+                                      ),
+                                      labelStyle: TextStyle(
+                                        color: Colors.black,
+                                      ),
+                                      contentPadding: EdgeInsets.symmetric(
+                                        vertical: 10,
+                                        horizontal: 8,
+                                      ),
+                                    ),
+                                    style: const TextStyle(
+                                      fontSize: 16,
+                                      color: Colors.grey,
+                                    ),
+                                    controller: _signNameTech2Text,
+                                  ),
+                                  const SizedBox(
+                                    height: 15,
+                                  ),
+                                  const Text(
+                                    'Ttd Teknisi 2',
+                                    style: TextStyle(
+                                      color: Colors.black,
+                                      fontWeight: FontWeight.w400,
+                                      fontFamily: "Inter",
+                                      fontSize: 14,
+                                    ),
+                                    textAlign: TextAlign.start,
+                                  ),
+                                  const SizedBox(
+                                    height: 5,
+                                  ),
+                                  Signature(
+                                    controller: _signTech2Controller,
+                                    height: 150,
+                                    backgroundColor: Colors.blueGrey.shade50,
+                                  ),
+                                  const SizedBox(
+                                    height: 15,
+                                  ),
+                                  ElevatedButton(
+                                    style: ElevatedButton.styleFrom(
+                                      shape: const StadiumBorder(),
+                                      backgroundColor: Colors.orange[800],
+                                      padding: const EdgeInsets.symmetric(
+                                        horizontal: 20,
+                                        vertical: 10,
+                                      ),
+                                    ),
+                                    child: const Text(
+                                      'Bersihkan',
+                                      style: TextStyle(
+                                        color: Colors.white,
+                                        fontSize: 14,
+                                        fontWeight: FontWeight.bold,
+                                        fontFamily: 'Inter',
+                                      ),
+                                    ),
+                                    onPressed: () {
+                                      _signTech2Controller.clear();
+                                    },
+                                  ),
+                                  const SizedBox(
+                                    height: 15,
+                                  ),
+                                ],
+                              ),
+                            ),
+                            isExpanded: expanded[3],
+                          ),
+                          ExpansionPanel(
+                            headerBuilder: (context, isOpen) {
+                              return const Padding(
+                                padding: EdgeInsets.all(15),
+                                child: Text(
                                   "Digital Signature",
                                   style: TextStyle(
                                     color: Colors.black,
@@ -2414,7 +2640,45 @@ class _UpsScreenState extends State<UpsScreen> {
                                 horizontal: 15,
                               ),
                               child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
+                                  const Text(
+                                    'Nama Penanggung Jawab',
+                                    style: TextStyle(
+                                      color: Colors.black,
+                                      fontWeight: FontWeight.w400,
+                                      fontFamily: "Inter",
+                                      fontSize: 14,
+                                    ),
+                                    textAlign: TextAlign.start,
+                                  ),
+                                  const SizedBox(
+                                    height: 5,
+                                  ),
+                                  TextField(
+                                    decoration: const InputDecoration(
+                                      border: OutlineInputBorder(
+                                        borderRadius: BorderRadius.all(
+                                          Radius.circular(8),
+                                        ),
+                                      ),
+                                      labelStyle: TextStyle(
+                                        color: Colors.black,
+                                      ),
+                                      contentPadding: EdgeInsets.symmetric(
+                                        vertical: 10,
+                                        horizontal: 8,
+                                      ),
+                                    ),
+                                    style: const TextStyle(
+                                      fontSize: 16,
+                                      color: Colors.grey,
+                                    ),
+                                    controller: _signatureNameText,
+                                  ),
+                                  const SizedBox(
+                                    height: 15,
+                                  ),
                                   RichText(
                                     textAlign: TextAlign.justify,
                                     text: const TextSpan(
@@ -2489,7 +2753,7 @@ class _UpsScreenState extends State<UpsScreen> {
                                 ],
                               ),
                             ),
-                            isExpanded: expanded[3],
+                            isExpanded: expanded[4],
                           ),
                         ],
                       ),
@@ -2503,16 +2767,43 @@ class _UpsScreenState extends State<UpsScreen> {
                           height: 40,
                           child: ElevatedButton(
                             onPressed: () async {
-                              if (_signController.isNotEmpty) {
+                              if (_signController.isNotEmpty &&
+                                  _signTech1Controller.isNotEmpty) {
                                 var ttd = await _signController.toPngBytes();
+                                var ttdTech1 =
+                                    await _signTech1Controller.toPngBytes();
+                                var ttdTech2 =
+                                    await _signTech2Controller.toPngBytes();
                                 digitalSign = base64Encode(ttd!);
+                                digitalTech1Sign = base64Encode(ttdTech1!);
+
+                                if (_signTech2Controller.isNotEmpty) {
+                                  digitalTech2Sign = base64Encode(ttdTech2!);
+                                }
+
                                 // print(signedImage);
+
+                                // if (imageSelect.isNotEmpty && videoSelect!.path.isNotEmpty)
+                                // {
                                 save();
+                                // }
+                                // else
+                                // {
+                                // showDialog(
+                                //   context: context,
+                                //   builder: (context) => ErrorDialog(
+                                //     "Upload photo and video is required",
+                                //   ),
+                                // );
+                                // }
+
+                                // print(
+                                //     "Assesment Date : ${date.convertStringToDb(_assesmentDateText.text)}");
                               } else {
                                 showDialog(
                                   context: context,
                                   builder: (context) => ErrorDialog(
-                                    "Please sign digital signature",
+                                    "Please sign digital signature or Technician Signature",
                                   ),
                                 );
                               }

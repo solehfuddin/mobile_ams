@@ -9,3 +9,4 @@ part 'media_models.dart';
 part 'notification_models.dart';
 part 'success_models.dart';
 part 'feedback_models.dart';
+part 'feedback_res_models.dart';

@@ -9,3 +9,4 @@ Color labelColor = const Color(0xFFD9D9D9);
 Color grayLightColor = const Color(0xFFD9D9D9);
 Color processTicketColor = const Color(0xFFDBA338);
 Color completeTicketColor = const Color(0xFF51B22E);
+Color rescheduleTicketColor = const Color(0xFFE84848);

@@ -181,10 +181,30 @@ class _OnsiteScreenState extends State<OnsiteScreen> {
                                               ),
                                               Row(
                                                 mainAxisAlignment:
-                                                    MainAxisAlignment.end,
+                                                    MainAxisAlignment
+                                                        .spaceBetween,
                                                 children: [
-                                                  data.rowStateName! ==
-                                                          "COMPLETE"
+                                                  Text(
+                                                    data.rowStateName!,
+                                                    style: TextStyle(
+                                                      color: data.rowStateName! ==
+                                                              "COMPLETE"
+                                                          ? completeTicketColor
+                                                          : data.rowStateName ==
+                                                                  "ON SITE"
+                                                              ? mainColor
+                                                              : processTicketColor,
+                                                      fontWeight:
+                                                          FontWeight.bold,
+                                                      fontFamily: "Inter",
+                                                      fontSize: 14,
+                                                    ),
+                                                  ),
+                                                  // data.rowStateName! ==
+                                                  //             "COMPLETE" ||
+                                                  //         data.feedbackId ==
+                                                  //             null
+                                                  data.feedbackId != ""
                                                       ? const SizedBox(
                                                           width: 5,
                                                         )
@@ -274,9 +294,26 @@ class _OnsiteScreenState extends State<OnsiteScreen> {
                                         ),
                                         Row(
                                           mainAxisAlignment:
-                                              MainAxisAlignment.end,
+                                              MainAxisAlignment.spaceBetween,
                                           children: [
-                                            data.rowStateName! == "COMPLETE"
+                                            Text(
+                                              data.rowStateName!,
+                                              style: TextStyle(
+                                                color: data.rowStateName! ==
+                                                        "COMPLETE"
+                                                    ? completeTicketColor
+                                                    : data.rowStateName ==
+                                                            "ON SITE"
+                                                        ? mainColor
+                                                        : processTicketColor,
+                                                fontWeight: FontWeight.bold,
+                                                fontFamily: "Inter",
+                                                fontSize: 14,
+                                              ),
+                                            ),
+                                            // data.rowStateName! == "COMPLETE" ||
+                                            //         data.feedbackId == null
+                                            data.feedbackId != ""
                                                 ? const SizedBox(
                                                     width: 5,
                                                   )

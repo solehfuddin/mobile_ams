@@ -9,4 +9,14 @@ extension DateHelper on DateTime {
     final now = DateTime.now();
     return now.difference(this).inDays;
   }
+
+  String convertDatetimeToDb(DateTime date) {
+    DateFormat dateFormat = DateFormat("yyyy-MM-dd");
+    return dateFormat.format(date);
+  }
+
+  String convertStringToDb(String date) {
+    var convert = date.split("/");
+    return "${convert[2]}-${convert[1]}-${convert[0]}";
+  }
 }

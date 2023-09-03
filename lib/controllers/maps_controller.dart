@@ -20,6 +20,7 @@ class MapsController extends GetxController {
       "pic_name": trouble?.picName,
       "lat": trouble?.latt,
       "long": trouble?.long,
+      "city": trouble?.city,
       "address": trouble?.address,
       "area_code": trouble?.areaCode,
       "phone_number": trouble?.phoneNumber,

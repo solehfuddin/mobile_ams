@@ -19,6 +19,8 @@ class ApiServices {
         sts = "Invalid API key";
       } else {
         sts = "General Error";
+        print(e);
+        // sts = e.response!.statusCode.toString();
       }
 
       responseApi = LoginResModel(false, sts, null);
@@ -190,7 +192,38 @@ class ApiServices {
         sts = "General Error";
       }
 
+      // print("Errornya : ${e.message}");
+
+      // String? sts = e.message;
+
       responseApi = GlobalModels(false, sts);
+    }
+
+    return responseApi;
+  }
+
+  Future<FeedbackResModel> apiGetFeedback(var data) async {
+    late FeedbackResModel responseApi;
+
+    try {
+      var response = await _dio.get(
+        "trouble_feedbacks/getby",
+        queryParameters: {"trouble_no_index": data},
+        cancelToken: CancelToken(),
+      );
+
+      // print(response);
+
+      responseApi = FeedbackResModel.fromJson(response.data);
+    } on DioError catch (e) {
+      bool sts = false;
+      if (e.response?.statusCode == 400) {
+        sts = false;
+      } else if (e.response?.statusCode == 403) {
+        sts = false;
+      } else {
+        sts = false;
+      }
     }
 
     return responseApi;

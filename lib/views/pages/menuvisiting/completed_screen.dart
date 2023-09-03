@@ -199,8 +199,41 @@ class _CompletedScreenState extends State<CompletedScreen> {
                                                   ),
                                                   data.rowStateName! ==
                                                           "COMPLETE"
-                                                      ? const SizedBox(
-                                                          width: 5,
+                                                      ? SizedBox(
+                                                          width: 100,
+                                                          height: 30,
+                                                          child: ElevatedButton(
+                                                            onPressed: () {
+                                                              showModalBottomSheet(
+                                                                context:
+                                                                    context,
+                                                                builder:
+                                                                    (context) {
+                                                                  return DialogCompleted(
+                                                                    troubleId: data
+                                                                        .troubleNo,
+                                                                  );
+                                                                },
+                                                              );
+                                                            },
+                                                            style:
+                                                                ElevatedButton
+                                                                    .styleFrom(
+                                                              backgroundColor:
+                                                                  completeTicketColor,
+                                                              shape:
+                                                                  RoundedRectangleBorder(
+                                                                borderRadius:
+                                                                    BorderRadius
+                                                                        .circular(
+                                                                  30,
+                                                                ),
+                                                              ),
+                                                            ),
+                                                            child: const Text(
+                                                              'Detail',
+                                                            ),
+                                                          ),
                                                         )
                                                       : SizedBox(
                                                           width: 100,
@@ -236,7 +269,7 @@ class _CompletedScreenState extends State<CompletedScreen> {
                                               ),
                                             ],
                                           ),
-                                        )
+                                        ),
                                       ]);
                                 } else {
                                   return Container(
@@ -302,8 +335,38 @@ class _CompletedScreenState extends State<CompletedScreen> {
                                               ),
                                             ),
                                             data.rowStateName! == "COMPLETE"
-                                                ? const SizedBox(
-                                                    width: 5,
+                                                ? SizedBox(
+                                                    width: 100,
+                                                    height: 30,
+                                                    child: ElevatedButton(
+                                                      onPressed: () {
+                                                        showModalBottomSheet(
+                                                          context: context,
+                                                          builder: (context) {
+                                                            return DialogCompleted(
+                                                              troubleId: data
+                                                                  .troubleNo,
+                                                            );
+                                                          },
+                                                        );
+                                                      },
+                                                      style: ElevatedButton
+                                                          .styleFrom(
+                                                        backgroundColor:
+                                                            completeTicketColor,
+                                                        shape:
+                                                            RoundedRectangleBorder(
+                                                          borderRadius:
+                                                              BorderRadius
+                                                                  .circular(
+                                                            30,
+                                                          ),
+                                                        ),
+                                                      ),
+                                                      child: const Text(
+                                                        'Detail',
+                                                      ),
+                                                    ),
                                                   )
                                                 : SizedBox(
                                                     width: 100,

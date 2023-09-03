@@ -132,9 +132,13 @@ class _NotificationScreenState extends State<NotificationScreen> {
                                         height: 10,
                                       ),
                                       Container(
-                                        height: 60,
+                                        // height: 60,
+                                        constraints: const BoxConstraints(
+                                          maxHeight: double.infinity,
+                                        ),
                                         padding: const EdgeInsets.symmetric(
                                           horizontal: 15,
+                                          vertical: 5,
                                         ),
                                         decoration: BoxDecoration(
                                           color: Colors.white,
@@ -181,9 +185,13 @@ class _NotificationScreenState extends State<NotificationScreen> {
                                   );
                                 } else {
                                   Container(
-                                    height: 60,
+                                    // height: 60,
+                                    constraints: const BoxConstraints(
+                                      maxHeight: double.infinity,
+                                    ),
                                     padding: const EdgeInsets.symmetric(
                                       horizontal: 15,
+                                      vertical: 5,
                                     ),
                                     decoration: BoxDecoration(
                                       color: Colors.white,

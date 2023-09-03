@@ -174,10 +174,30 @@ class _VisitingScreenState extends State<VisitingScreen> {
                                               data.rowStateName! == "ON SITE"
                                                   ? Row(
                                                       mainAxisAlignment:
-                                                          MainAxisAlignment.end,
+                                                          MainAxisAlignment
+                                                              .spaceBetween,
                                                       children: [
-                                                        data.rowStateName! ==
-                                                                "COMPLETE"
+                                                        Text(
+                                                          data.rowStateName!,
+                                                          style: TextStyle(
+                                                            color: data.rowStateName! ==
+                                                                    "COMPLETE"
+                                                                ? completeTicketColor
+                                                                : data.rowStateName ==
+                                                                        "ON SITE"
+                                                                    ? mainColor
+                                                                    : processTicketColor,
+                                                            fontWeight:
+                                                                FontWeight.bold,
+                                                            fontFamily: "Inter",
+                                                            fontSize: 14,
+                                                          ),
+                                                        ),
+                                                        // data.rowStateName! ==
+                                                        //             "COMPLETE" ||
+                                                        //         data.feedbackId !=
+                                                        //             null
+                                                        data.feedbackId != ""
                                                             ? const SizedBox(
                                                                 width: 5,
                                                               )
@@ -228,7 +248,10 @@ class _VisitingScreenState extends State<VisitingScreen> {
                                                             color: data.rowStateName! ==
                                                                     "COMPLETE"
                                                                 ? completeTicketColor
-                                                                : processTicketColor,
+                                                                : data.rowStateName ==
+                                                                        "RESCHEDULE"
+                                                                    ? rescheduleTicketColor
+                                                                    : processTicketColor,
                                                             fontWeight:
                                                                 FontWeight.bold,
                                                             fontFamily: "Inter",
@@ -237,8 +260,43 @@ class _VisitingScreenState extends State<VisitingScreen> {
                                                         ),
                                                         data.rowStateName! ==
                                                                 "COMPLETE"
-                                                            ? const SizedBox(
-                                                                width: 5,
+                                                            ? SizedBox(
+                                                                width: 100,
+                                                                height: 30,
+                                                                child:
+                                                                    ElevatedButton(
+                                                                  onPressed:
+                                                                      () {
+                                                                    showModalBottomSheet(
+                                                                      context:
+                                                                          context,
+                                                                      builder:
+                                                                          (context) {
+                                                                        return DialogCompleted(
+                                                                          troubleId:
+                                                                              data.troubleNo,
+                                                                        );
+                                                                      },
+                                                                    );
+                                                                  },
+                                                                  style: ElevatedButton
+                                                                      .styleFrom(
+                                                                    backgroundColor:
+                                                                        completeTicketColor,
+                                                                    shape:
+                                                                        RoundedRectangleBorder(
+                                                                      borderRadius:
+                                                                          BorderRadius
+                                                                              .circular(
+                                                                        30,
+                                                                      ),
+                                                                    ),
+                                                                  ),
+                                                                  child:
+                                                                      const Text(
+                                                                    'Detail',
+                                                                  ),
+                                                                ),
                                                               )
                                                             : SizedBox(
                                                                 width: 100,
@@ -330,43 +388,69 @@ class _VisitingScreenState extends State<VisitingScreen> {
                                         data.rowStateName! == "ON SITE"
                                             ? Row(
                                                 mainAxisAlignment:
-                                                    MainAxisAlignment.end,
+                                                    MainAxisAlignment
+                                                        .spaceBetween,
                                                 children: [
-                                                  data.rowStateName! ==
-                                                          "COMPLETE"
+                                                  Text(
+                                                    data.rowStateName!,
+                                                    style: TextStyle(
+                                                      color: data.rowStateName! ==
+                                                              "COMPLETE"
+                                                          ? completeTicketColor
+                                                          : data.rowStateName ==
+                                                                  "ON SITE"
+                                                              ? mainColor
+                                                              : processTicketColor,
+                                                      fontWeight:
+                                                          FontWeight.bold,
+                                                      fontFamily: "Inter",
+                                                      fontSize: 14,
+                                                    ),
+                                                  ),
+                                                  // data.rowStateName! ==
+                                                  //             "COMPLETE" ||
+                                                  //         data.feedbackId !=
+                                                  //             null
+                                                  data.feedbackId != ""
                                                       ? const SizedBox(
                                                           width: 5,
                                                         )
-                                                      : SizedBox(
-                                                          width: 140,
-                                                          height: 30,
-                                                          child: ElevatedButton(
-                                                            onPressed: () {
-                                                              Navigator
-                                                                  .pushNamed(
-                                                                context,
-                                                                '/create-record',
-                                                                arguments: data,
-                                                              );
-                                                            },
-                                                            style:
-                                                                ElevatedButton
+                                                      : Row(
+                                                          children: [
+                                                            SizedBox(
+                                                              width: 140,
+                                                              height: 30,
+                                                              child:
+                                                                  ElevatedButton(
+                                                                onPressed: () {
+                                                                  Navigator
+                                                                      .pushNamed(
+                                                                    context,
+                                                                    '/create-record',
+                                                                    arguments:
+                                                                        data,
+                                                                  );
+                                                                },
+                                                                style: ElevatedButton
                                                                     .styleFrom(
-                                                              backgroundColor:
-                                                                  mainColor,
-                                                              shape:
-                                                                  RoundedRectangleBorder(
-                                                                borderRadius:
-                                                                    BorderRadius
-                                                                        .circular(
-                                                                  30,
+                                                                  backgroundColor:
+                                                                      mainColor,
+                                                                  shape:
+                                                                      RoundedRectangleBorder(
+                                                                    borderRadius:
+                                                                        BorderRadius
+                                                                            .circular(
+                                                                      30,
+                                                                    ),
+                                                                  ),
+                                                                ),
+                                                                child:
+                                                                    const Text(
+                                                                  'Create Record',
                                                                 ),
                                                               ),
                                                             ),
-                                                            child: const Text(
-                                                              'Create Record',
-                                                            ),
-                                                          ),
+                                                          ],
                                                         ),
                                                 ],
                                               )
@@ -381,7 +465,10 @@ class _VisitingScreenState extends State<VisitingScreen> {
                                                       color: data.rowStateName! ==
                                                               "COMPLETE"
                                                           ? completeTicketColor
-                                                          : processTicketColor,
+                                                          : data.rowStateName ==
+                                                                  "RESCHEDULE"
+                                                              ? rescheduleTicketColor
+                                                              : processTicketColor,
                                                       fontWeight:
                                                           FontWeight.bold,
                                                       fontFamily: "Inter",
@@ -390,8 +477,41 @@ class _VisitingScreenState extends State<VisitingScreen> {
                                                   ),
                                                   data.rowStateName! ==
                                                           "COMPLETE"
-                                                      ? const SizedBox(
-                                                          width: 5,
+                                                      ? SizedBox(
+                                                          width: 100,
+                                                          height: 30,
+                                                          child: ElevatedButton(
+                                                            onPressed: () {
+                                                              showModalBottomSheet(
+                                                                context:
+                                                                    context,
+                                                                builder:
+                                                                    (context) {
+                                                                  return DialogCompleted(
+                                                                    troubleId: data
+                                                                        .troubleNo,
+                                                                  );
+                                                                },
+                                                              );
+                                                            },
+                                                            style:
+                                                                ElevatedButton
+                                                                    .styleFrom(
+                                                              backgroundColor:
+                                                                  completeTicketColor,
+                                                              shape:
+                                                                  RoundedRectangleBorder(
+                                                                borderRadius:
+                                                                    BorderRadius
+                                                                        .circular(
+                                                                  30,
+                                                                ),
+                                                              ),
+                                                            ),
+                                                            child: const Text(
+                                                              'Detail',
+                                                            ),
+                                                          ),
                                                         )
                                                       : SizedBox(
                                                           width: 100,

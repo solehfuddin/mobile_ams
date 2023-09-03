@@ -1,6 +1,30 @@
 part of 'controllers.dart';
 
 class FeedbackController extends GetxController {
+  var isLoading = false.obs;
+  var feedbackData = FeedbackResModel().obs;
+
+  void getData(BuildContext context, var troubleIndex) {
+    isLoading.value = true;
+
+    if (troubleIndex.isNotEmpty) {
+      ApiServices().apiGetFeedback(troubleIndex).then((value) {
+        isLoading.value = false;
+
+        if (value.status == true) {
+          feedbackData.value = value;
+
+          // print("branch : ${value.feedback?.branchName}");
+        }
+      });
+    } else {
+      showDialog(
+        context: context,
+        builder: (context) => ErrorDialog("Trouble index null"),
+      );
+    }
+  }
+
   void sendFeedback(BuildContext context, FeedbackModel feedback) async {
     showDialog(context: context, builder: (context) => const LoaderWidget());
 
@@ -53,6 +77,11 @@ class FeedbackController extends GetxController {
       ),
       "video_description": feedback.videoDescription,
       "signature": feedback.signature,
+      "signature_name": feedback.signatureName,
+      "signature_tech1": feedback.signatureTech1,
+      "name_tech1": feedback.nameTech1,
+      "signature_tech2": feedback.signatureTech2,
+      "name_tech2": feedback.nameTech2,
       "user_input": feedback.userInput,
       "created_at": feedback.createdAt,
     });

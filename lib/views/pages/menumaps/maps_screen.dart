@@ -13,6 +13,7 @@ class _MapsScreenState extends State<MapsScreen> {
   final _mapController = Get.put(MapsController());
   final Completer<GoogleMapController> _controller = Completer();
   late LatLng sourceLoc, targetLoc;
+  double distanceInMeters = 0;
 
   List<LatLng> polylineCoordinates = [];
   var location = LocationServices();
@@ -83,6 +84,13 @@ class _MapsScreenState extends State<MapsScreen> {
       double.parse(widget.trouble!.baseLong ?? "0"),
     );
     targetLoc = LatLng(
+      double.parse(widget.trouble!.latt ?? "0"),
+      double.parse(widget.trouble!.long ?? "0"),
+    );
+
+    distanceInMeters = Geolocator.distanceBetween(
+      double.parse(widget.trouble!.baseLatt ?? "0"),
+      double.parse(widget.trouble!.baseLong ?? "0"),
       double.parse(widget.trouble!.latt ?? "0"),
       double.parse(widget.trouble!.long ?? "0"),
     );
@@ -482,6 +490,7 @@ class _MapsScreenState extends State<MapsScreen> {
                                               ),
                                               Text(
                                                 '${widget.trouble!.distance} Km',
+                                                // '$distanceInMeters Km',
                                                 style: const TextStyle(
                                                   color: Colors.black,
                                                   fontWeight: FontWeight.w700,
