@@ -104,21 +104,21 @@ class _DashboardScreenState extends State<DashboardScreen> {
     });
 
     FirebaseMessaging.onMessageOpenedApp.listen((RemoteMessage message) {
-      // print('A new messageopen app event was published');
-      // RemoteNotification notification = message.notification!;
-      // showDialog(
-      //     context: context,
-      //     builder: (_) {
-      //       return AlertDialog(
-      //         title: Text(notification.title!),
-      //         content: SingleChildScrollView(
-      //           child: Column(
-      //             crossAxisAlignment: CrossAxisAlignment.start,
-      //             children: [Text(notification.body!)],
-      //           ),
-      //         ),
-      //       );
-      //     });
+      print('A new messageopen app event was published');
+      RemoteNotification notification = message.notification!;
+      showDialog(
+          context: context,
+          builder: (_) {
+            return AlertDialog(
+              title: Text(notification.title!),
+              content: SingleChildScrollView(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [Text(notification.body!)],
+                ),
+              ),
+            );
+          });
 
       Navigator.pushNamed(
         context,

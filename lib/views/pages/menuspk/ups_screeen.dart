@@ -12,7 +12,7 @@ class UpsScreen extends StatefulWidget {
 class _UpsScreenState extends State<UpsScreen> {
   final _feedbackController = Get.put(FeedbackController());
 
-  List<bool> expanded = [false, false, false, false, false];
+  List<bool> expanded = [true, false, false, false, false];
   String upsBrand = 'APC',
       snmpCard = '-- Belum dipilih --',
       epo = '-- Belum dipilih --',
@@ -270,7 +270,8 @@ class _UpsScreenState extends State<UpsScreen> {
                       ExpansionPanelList(
                         expansionCallback: (panelIndex, isExpanded) {
                           setState(() {
-                            expanded[panelIndex] = !isExpanded;
+                            expanded[panelIndex] = isExpanded;
+                            print('$panelIndex and $isExpanded');
                           });
                         },
                         animationDuration: const Duration(
@@ -278,6 +279,7 @@ class _UpsScreenState extends State<UpsScreen> {
                         ),
                         children: [
                           ExpansionPanel(
+                            canTapOnHeader: true,
                             headerBuilder: (context, isOpen) {
                               return const Padding(
                                 padding: EdgeInsets.all(15),
@@ -866,6 +868,7 @@ class _UpsScreenState extends State<UpsScreen> {
                             isExpanded: expanded[0],
                           ),
                           ExpansionPanel(
+                            canTapOnHeader: true,
                             headerBuilder: (context, isOpen) {
                               return const Padding(
                                 padding: EdgeInsets.all(15),
@@ -2231,6 +2234,7 @@ class _UpsScreenState extends State<UpsScreen> {
                             isExpanded: expanded[1],
                           ),
                           ExpansionPanel(
+                            canTapOnHeader: true,
                             headerBuilder: (context, isOpen) {
                               return const Padding(
                                 padding: EdgeInsets.all(15),
@@ -2428,6 +2432,7 @@ class _UpsScreenState extends State<UpsScreen> {
                             isExpanded: expanded[2],
                           ),
                           ExpansionPanel(
+                            canTapOnHeader: true,
                             headerBuilder: (context, isOpen) {
                               return const Padding(
                                 padding: EdgeInsets.all(15),
@@ -2621,6 +2626,7 @@ class _UpsScreenState extends State<UpsScreen> {
                             isExpanded: expanded[3],
                           ),
                           ExpansionPanel(
+                            canTapOnHeader: true,
                             headerBuilder: (context, isOpen) {
                               return const Padding(
                                 padding: EdgeInsets.all(15),
